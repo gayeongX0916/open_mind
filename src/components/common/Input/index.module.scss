@@ -1,0 +1,18 @@
+.inputWrapper {
+  display: flex;
+  align-items: center;
+  border: 1px solid #000;
+  width: 340px;
+  column-gap: 5px;
+  padding: 12px 16px;
+  border-radius: 8px;
+}
+
+.inputField {
+  outline: none;
+  border: none;
+  font-size: 16px;
+}
+
+.inputTextarea {
+}

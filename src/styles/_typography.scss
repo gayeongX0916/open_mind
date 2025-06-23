@@ -1,0 +1,46 @@
+// Font weights
+$font-weight-regular: 400;
+$font-weight-medium: 500;
+$font-weight-bold: 700;
+
+@mixin heading-1($weight: $font-weight-regular) {
+  font-size: 40px;
+  font-weight: $weight;
+  line-height: 40px;
+}
+
+@mixin heading-2($weight: $font-weight-regular) {
+  font-size: 32px;
+  font-weight: $weight;
+  line-height: 40px;
+}
+
+@mixin heading-3($weight: $font-weight-regular) {
+  font-size: 24px;
+  font-weight: $weight;
+  line-height: 30px;
+}
+
+@mixin body-1($weight: $font-weight-regular) {
+  font-size: 20px;
+  font-weight: $weight;
+  line-height: 25px;
+}
+
+@mixin body-2($weight: $font-weight-regular) {
+  font-size: 18px;
+  font-weight: $weight;
+  line-height: 24px;
+}
+
+@mixin body-3($weight: $font-weight-regular) {
+  font-size: 16px;
+  font-weight: $weight;
+  line-height: 22px;
+}
+
+@mixin caption-1($weight: $font-weight-regular) {
+  font-size: 14px;
+  font-weight: $weight;
+  line-height: 18px;
+}
