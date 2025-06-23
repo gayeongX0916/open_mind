@@ -1,18 +1,42 @@
+@use "@/styles/_color.scss" as *;
+@use "@/styles/_typography.scss" as *;
+
 .inputWrapper {
   display: flex;
   align-items: center;
-  border: 1px solid #000;
+  border: 1.5px solid $gray-40;
   width: 340px;
   column-gap: 5px;
   padding: 12px 16px;
   border-radius: 8px;
+
+  &.isFocused {
+    border: 1.5px solid $brown-40;
+  }
 }
 
 .inputField {
+  @include body-3;
   outline: none;
   border: none;
-  font-size: 16px;
+  color: $gray-60;
+
+  &::placeholder {
+    color: $gray-40;
+  }
 }
 
-.inputTextarea {
+.textareaField {
+  @include body-3;
+  border: none;
+  resize: none;
+  color: $gray-60;
+  outline: none;
+  background-color: $gray-20;
+  border-radius: 8px;
+  padding: 16px 16px;
+
+  &::placeholder {
+    color: $gray-40;
+  }
 }
