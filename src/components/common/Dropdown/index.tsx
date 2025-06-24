@@ -70,33 +70,31 @@ export function ActioDropdown() {
     { img: editIcon, label: "수정하기", clickedImg: editBlueIcon },
     { img: closeIcon, label: "삭제하기", clickedImg: closeBlueIcon },
   ];
-  const [selected, setSelected] = useState("수정하기");
+  const [selected, setSelected] = useState("");
 
   return (
     <div className={styles["action-dropdown"]}>
-      {actionDropdownList.map((option) => (
-        <button
-          key={option.label}
-          className={styles["action-dropdown__menu-button"]}
-          onClick={() => setSelected(option.label)}
-        >
-          <Image
-            src={option.img}
-            alt={option.label}
-            width={14}
-            height={14}
-            className={styles["default-img"]}
-          />
-          <Image
-            src={option.clickedImg}
-            alt={option.label}
-            width={14}
-            height={14}
-            className={styles["hover-img"]}
-          />
-          {option.label}
-        </button>
-      ))}
+      {actionDropdownList.map((option) => {
+        const isSelected = selected === option.label;
+        return (
+          <button
+            key={option.label}
+            className={`${styles["action-dropdown__menu-button"]} ${
+              isSelected ? styles["selected"] : ""
+            }`}
+            onClick={() => setSelected(option.label)}
+          >
+            <Image
+              src={isSelected ? option.clickedImg : option.img}
+              alt={option.label}
+              width={14}
+              height={14}
+              className={styles["default-img"]}
+            />
+            {option.label}
+          </button>
+        );
+      })}
     </div>
   );
 }
