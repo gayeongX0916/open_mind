@@ -1,7 +1,7 @@
 @use "@/styles/_color.scss" as *;
 @use "@/styles/_typography.scss" as *;
 
-.inputWrapper {
+.input-wrapper {
   display: flex;
   align-items: center;
   border: 1.5px solid $gray-40;
@@ -15,7 +15,7 @@
   }
 }
 
-.inputField {
+.input-field {
   @include body-3;
   outline: none;
   border: none;
@@ -26,7 +26,7 @@
   }
 }
 
-.textareaField {
+.textarea-field {
   @include body-3;
   border: none;
   resize: none;
