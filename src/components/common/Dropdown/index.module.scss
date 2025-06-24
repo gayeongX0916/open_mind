@@ -82,21 +82,9 @@
       color: $gray-60;
     }
 
-    &:active .default-img {
-      display: none;
-    }
-
-    &:active .hover-img {
-      display: inline;
-    }
-
-    &:active {
+    &.selected {
       background-color: $gray-10;
       color: $blue-50;
     }
   }
-}
-
-.hover-img {
-  display: none;
 }

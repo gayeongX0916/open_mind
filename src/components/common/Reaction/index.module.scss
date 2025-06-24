@@ -1,0 +1,39 @@
+@use "@/styles/_color.scss" as *;
+@use "@/styles/_typography.scss" as *;
+
+.reaction {
+  display: flex;
+  column-gap: 6px;
+  align-items: center;
+  border: none;
+  background-color: unset;
+  cursor: pointer;
+
+  &__label-wrapper {
+    display: flex;
+    align-items: center;
+    column-gap: 5px;
+  }
+
+  &__label {
+    @include caption-1;
+    color: $gray-40;
+
+    &.active-label-good {
+      color: $blue-50;
+    }
+
+    &.active-label-bad {
+      color: $gray-60;
+    }
+  }
+
+  &__label-count {
+    @include caption-1;
+    color: $gray-40;
+
+    &.active-label-count {
+      color: $blue-50;
+    }
+  }
+}
