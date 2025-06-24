@@ -1,0 +1,17 @@
+@use "@/styles/_color.scss" as *;
+@use "@/styles/_typography.scss" as *;
+
+.badge {
+  @include caption-1;
+  display: inline-block;
+  border: 1px solid $gray-40;
+  color: $gray-40;
+  background-color: $gray-10;
+  padding: 4px 12px;
+  border-radius: 8px;
+
+  &.complete {
+    border: 1px solid $brown-40;
+    color: $brown-40;
+  }
+}
