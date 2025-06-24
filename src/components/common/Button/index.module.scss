@@ -1,0 +1,77 @@
+@use "@/styles/_color.scss" as *;
+@use "@/styles/_typography.scss" as *;
+@use "@/styles/_shadow.scss" as *;
+
+.box-button {
+  display: flex;
+  align-items: center;
+  column-gap: 8px;
+  padding: 12px 24px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.question-button {
+  @include body-3;
+  background-color: $brown-40;
+  color: $gray-10;
+  border: none;
+
+  &:hover {
+    border: 1px solid $brown-50;
+  }
+  &:active {
+    background-color: $brown-50;
+  }
+  &:disabled {
+    background-color: $brown-30;
+    border: none;
+  }
+}
+
+.answer-button {
+  @include body-3;
+  background-color: $brown-10;
+  border: 1px solid $brown-40;
+  color: $brown-40;
+
+  &:hover {
+    border: 2px solid $brown-40;
+  }
+  &:active {
+    background-color: $brown-20;
+  }
+  &:disabled {
+    background-color: $brown-10;
+    border: 1px solid $brown-30;
+  }
+}
+
+.floating-button {
+  @include body-1;
+  background-color: $brown-40;
+  border-radius: 200px;
+  padding: 12px 24px;
+  color: $gray-10;
+  box-shadow: $shadow-3;
+}
+
+.share-button {
+  width: 40px;
+  height: 40px;
+  border-radius: 200px;
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &.link-button {
+    background-color: $brown-40;
+  }
+  &.kakao-button {
+    background-color: $yellow-50;
+  }
+  &.facebook-button {
+    background-color: $blue-50;
+  }
+}
