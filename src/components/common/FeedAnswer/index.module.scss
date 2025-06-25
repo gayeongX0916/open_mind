@@ -1,0 +1,46 @@
+@use "@/styles/_color.scss" as *;
+@use "@/styles/_typography.scss" as *;
+@use "@/styles/_shadow.scss" as *;
+
+.feed-answer {
+  display: flex;
+  column-gap: 12px;
+
+  &__profile {
+    border-radius: 50%;
+    object-fit: cover;
+  }
+
+  &__right-wrapper {
+    display: flex;
+    flex-direction: column;
+    row-gap: 8px;
+    width: 100%;
+  }
+
+  &__nickname {
+    @include body-2;
+    color: $gray-60;
+  }
+
+  &__complete-answer {
+    @include body-3;
+    color: $gray-60;
+  }
+
+  &__button {
+    @include body-3;
+    background-color: $brown-30;
+    color: $gray-10;
+    border: none;
+    border-radius: 8px;
+    padding: 12px 24px;
+    height: 46px;
+    cursor:not-allowed;
+  }
+
+  .complete {
+    background-color: $brown-40;
+    cursor: pointer;
+  }
+}
