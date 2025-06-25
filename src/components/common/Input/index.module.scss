@@ -28,6 +28,7 @@
 
 .textarea-field {
   @include body-3;
+  width: 100%;
   border: none;
   resize: none;
   color: $gray-60;
