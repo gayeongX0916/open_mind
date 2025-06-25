@@ -1,0 +1,27 @@
+@use "@/styles/_color.scss" as *;
+@use "@/styles/_typography.scss" as *;
+@use "@/styles/_shadow.scss" as *;
+
+.toast {
+  @include caption-1;
+  border-radius: 8px;
+  padding: 12px 20px;
+  box-shadow: $shadow-3;
+  background-color: $gray-60;
+  color: $gray-10;
+  display: inline-block;
+
+  animation: fadeOut 5s ease-in-out forwards;
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  100% {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
