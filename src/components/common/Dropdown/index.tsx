@@ -65,7 +65,7 @@ export function SortDropdown() {
   );
 }
 
-export function ActioDropdown() {
+export function ActionDropdown() {
   const actionDropdownList = [
     { img: editIcon, label: "수정하기", clickedImg: editBlueIcon },
     { img: closeIcon, label: "삭제하기", clickedImg: closeBlueIcon },
