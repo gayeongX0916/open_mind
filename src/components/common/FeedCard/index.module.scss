@@ -1,0 +1,52 @@
+@use "@/styles/_color.scss" as *;
+@use "@/styles/_typography.scss" as *;
+@use "@/styles/_shadow.scss" as *;
+
+.feed-card {
+  width: 690px;
+  padding: 32px 32px;
+  background-color: $gray-10;
+  border-radius: 16px;
+  box-shadow: $shadow-1;
+  display: flex;
+  flex-direction: column;
+  row-gap: 32px;
+
+  &__badge-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &__more-wrapper {
+    position: relative;
+    display: flex;
+  }
+
+  &__more-button {
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+    padding: 0px;
+  }
+
+  &__more-img {
+    display: block;
+  }
+
+  &__dropdown {
+    position: absolute;
+    top: 100%;
+    right: 0;
+  }
+
+  &__bottom-line {
+    height: 1px;
+    background-color: $gray-30;
+  }
+
+  &__reaction-wrapper {
+    display: flex;
+    column-gap: 32px;
+  }
+}

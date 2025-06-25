@@ -7,15 +7,12 @@ import { useState } from "react";
 
 type FeedAnswerProps = {
   img: string;
+  onComplete: () => void;
+  isCompleted: boolean;
 };
 
-export function FeedAnswer({ img }: FeedAnswerProps) {
+export function FeedAnswer({ img, onComplete, isCompleted }: FeedAnswerProps) {
   const [value, setValue] = useState("");
-  const [isCompleted, setIsCompleted] = useState(false);
-
-  const handleCompletedAnswer = () => {
-    setIsCompleted(true);
-  };
 
   return (
     <div className={styles["feed-answer"]}>
@@ -44,7 +41,7 @@ export function FeedAnswer({ img }: FeedAnswerProps) {
             className={`${styles["feed-answer__button"]} ${
               value ? styles.complete : ""
             }`}
-            onClick={handleCompletedAnswer}
+            onClick={onComplete}
           >
             답변 완료
           </button>

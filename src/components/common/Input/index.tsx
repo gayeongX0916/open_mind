@@ -35,7 +35,9 @@ export function InputField({
 
   return (
     <div
-      className={`${styles["input-wrapper"]} ${isFocused ? styles.isFocused : ""}`}
+      className={`${styles["input-wrapper"]} ${
+        isFocused ? styles.isFocused : ""
+      }`}
     >
       <Image src={personIcon} alt="사람" width={20} height={20} />
       <input
@@ -65,7 +67,7 @@ export function InputTextarea({
   };
 
   return (
-    <div className={styles["textarea-wrapper"]}>
+    <>
       <textarea
         className={styles["textarea-field"]}
         placeholder={placeholder || "이름을 입력하세요"}
@@ -73,6 +75,6 @@ export function InputTextarea({
         onChange={onChange}
         onKeyDown={handleKeyDown}
       />
-    </div>
+    </>
   );
 }
