@@ -1,0 +1,30 @@
+@use "@/styles/_color.scss" as *;
+@use "@/styles/_typography.scss" as *;
+@use "@/styles/_shadow.scss" as *;
+
+.kebab-menu {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 110px;
+  background-color: $gray-10;
+  border: 1px solid $gray-30;
+  padding: 4px 0px;
+  border-radius: 8px;
+
+  &__button {
+    @include caption-1;
+    border: none;
+    background-color: transparent;
+    color: $gray-50;
+    padding: 6px 16px;
+    display: flex;
+    column-gap: 8px;
+    align-items: center;
+    cursor: pointer;
+
+    &:hover {
+      color: $blue-50;
+    }
+  }
+}

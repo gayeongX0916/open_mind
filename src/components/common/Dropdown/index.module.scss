@@ -2,28 +2,28 @@
 @use "@/styles/_typography.scss" as *;
 @use "@/styles/_shadow.scss" as *;
 
-.sort-dropdown__wrapper {
+.dropdown {
   position: relative;
   display: inline-block;
-}
 
-.sort-dropdown {
-  @include caption-1;
-  background-color: $gray-10;
-  border: 1px solid $gray-40;
-  border-radius: 8px;
-  padding: 8px 12px;
-  display: flex;
-  align-items: center;
-  column-gap: 2px;
-  cursor: pointer;
-  color: $gray-40;
+  &__wrapper {
+    @include caption-1;
+    background-color: $gray-10;
+    border: 1px solid $gray-40;
+    border-radius: 8px;
+    padding: 8px 12px;
+    display: flex;
+    align-items: center;
+    column-gap: 2px;
+    cursor: pointer;
+    color: $gray-40;
 
-  &:hover {
-    border: 1px solid $gray-60;
-    color: $gray-60;
+    &:hover {
+      border: 1px solid $gray-60;
+      color: $gray-60;
+    }
   }
-
+  
   &__isOpen {
     border: 1px solid $gray-60;
     color: $gray-60;
@@ -51,39 +51,6 @@
     text-align: left;
 
     &:hover {
-      color: $blue-50;
-    }
-  }
-}
-
-.action-dropdown {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 110px;
-  background-color: $gray-10;
-  border: 1px solid $gray-30;
-  padding: 4px 0px;
-  border-radius: 8px;
-
-  &__menu-button {
-    @include caption-1;
-    border: none;
-    background-color: transparent;
-    color: $gray-50;
-    padding: 6px 16px;
-    display: flex;
-    column-gap: 8px;
-    align-items: center;
-    cursor: pointer;
-
-    &:hover {
-      background-color: $gray-20;
-      color: $gray-60;
-    }
-
-    &.selected {
-      background-color: $gray-10;
       color: $blue-50;
     }
   }
