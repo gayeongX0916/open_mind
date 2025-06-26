@@ -9,13 +9,15 @@ import kakaoIcon from "@/assets/kakaotalk_icon.svg";
 import facebookIcon from "@/assets/facebook_white_icon.svg";
 import { ReactNode } from "react";
 
-type BoxButtonProps = {
+type ArrowButtonProps = {
   mode: "question" | "answer";
   children: ReactNode;
   onClick: () => void;
+  showArrow: boolean;
 };
 
 type FloatingButtonProps = {
+  mode?: "delete" | "question";
   children: ReactNode;
   onClick: () => void;
 };
@@ -25,12 +27,17 @@ type ShareButtonProps = {
   onClick: () => void;
 };
 
-export function BoxButton({ mode, children, onClick }: BoxButtonProps) {
+export function ArrowButton({
+  mode,
+  children,
+  onClick,
+  showArrow,
+}: ArrowButtonProps) {
   return (
     <>
       <button
         className={`
-          ${styles["box-button"]}
+          ${styles["arrow-button"]}
           ${
             mode === "question"
               ? styles["question-button"]
@@ -39,28 +46,24 @@ export function BoxButton({ mode, children, onClick }: BoxButtonProps) {
         `}
         onClick={onClick}
       >
-        <Image
-          src={mode === "question" ? arrowRightWhite : arrowRightBrown}
-          alt="화살표"
-          width={18}
-          height={18}
-        />
         {children}
-        <Image
-          src={mode === "question" ? arrowRightWhite : arrowRightBrown}
-          alt="화살표"
-          width={18}
-          height={18}
-        />
+        {showArrow && (
+          <Image
+            src={mode === "question" ? arrowRightWhite : arrowRightBrown}
+            alt="화살표"
+            width={18}
+            height={18}
+          />
+        )}
       </button>
     </>
   );
 }
 
-export function FloatingButton({ children, onClick }: FloatingButtonProps) {
+export function FloatingButton({mode='question', children, onClick }: FloatingButtonProps) {
   return (
     <>
-      <button className={styles["floating-button"]} onClick={onClick}>
+      <button className={`${styles["floating-button"]} ${mode==="delete" ? styles["delete-button"] : ""}`} onClick={onClick}>
         {children}
       </button>
     </>

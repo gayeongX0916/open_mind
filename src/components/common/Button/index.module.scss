@@ -2,12 +2,14 @@
 @use "@/styles/_typography.scss" as *;
 @use "@/styles/_shadow.scss" as *;
 
-.box-button {
+.arrow-button {
   display: flex;
+  justify-content: center;
   align-items: center;
   column-gap: 8px;
   padding: 12px 24px;
   border-radius: 8px;
+  height: 46px;
   cursor: pointer;
 }
 
@@ -54,6 +56,12 @@
   padding: 12px 24px;
   color: $gray-10;
   box-shadow: $shadow-3;
+  border: none;
+  cursor: pointer;
+}
+
+.delete-button{
+  @include caption-1;
 }
 
 .share-button {
