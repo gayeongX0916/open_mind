@@ -4,6 +4,7 @@ import Image from "next/image";
 import styles from "./index.module.scss";
 import { InputTextarea } from "../Input";
 import { useState } from "react";
+import { ArrowButton } from "../Button";
 
 type FeedAnswerProps = {
   img: string;
@@ -36,16 +37,14 @@ export function FeedAnswer({ img, onComplete, isCompleted }: FeedAnswerProps) {
             placeholder="답변을 입력해주세요"
           />
         )}
-        {!isCompleted && (
-          <button
-            className={`${styles["feed-answer__button"]} ${
-              value ? styles.complete : ""
-            }`}
-            onClick={onComplete}
-          >
-            답변 완료
-          </button>
-        )}
+        {!isCompleted &&
+          (value ? (
+            <ArrowButton mode="question" showArrow={false} onClick={onComplete}>
+              답변 완료
+            </ArrowButton>
+          ) : (
+            <button className={styles["feed-answer__button"]}>답변 완료</button>
+          ))}
       </div>
     </div>
   );
