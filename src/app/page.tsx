@@ -8,10 +8,19 @@ import { ArrowButton } from "@/components/common/Button";
 import { useRouter } from "next/navigation";
 import { InputField } from "@/components/common/Input";
 import { useState } from "react";
+import { createFeed } from "@/services/createFeed";
 
 const Home = () => {
   const router = useRouter();
-  const [value, setValue] = useState("");
+  const [nameInput, setNameInput] = useState("");
+
+  const handleSubmit = async (e: any) => {
+    e.preventDefault();
+
+    const data = await createFeed({ name: nameInput, team: "1-50" });
+    const userId = data.id;
+    router.push(`/post/${userId}/answer`);
+  };
 
   return (
     <main className={styles.main}>
@@ -27,8 +36,11 @@ const Home = () => {
       <div className={styles.logo}>
         <Image src={logo} alt="로고" width={456} height={180} />
       </div>
-      <form className={styles["input-form"]}>
-        <InputField value={value} onChange={(e) => setValue(e.target.value)} />
+      <form className={styles["input-form"]} onSubmit={(e) => handleSubmit(e)}>
+        <InputField
+          value={nameInput}
+          onChange={(e) => setNameInput(e.target.value)}
+        />
         <ArrowButton mode="question" showArrow={false} onClick={() => {}}>
           질문 받기
         </ArrowButton>
