@@ -7,11 +7,16 @@ import { useEffect, useState } from "react";
 
 type PaginationProps = {
   pageSize: number;
+  currentPage: number;
+  onPageChage: (page: number) => void;
 };
 
-export function Pagination({ pageSize }: PaginationProps) {
+export function Pagination({
+  pageSize,
+  currentPage,
+  onPageChage,
+}: PaginationProps) {
   const [totalPage, setTotalPage] = useState(0);
-  const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -33,13 +38,13 @@ export function Pagination({ pageSize }: PaginationProps) {
 
   const gotoPrev = () => {
     if (currentPage > 1) {
-      setCurrentPage((prev) => prev - 1);
+      onPageChage(currentPage - 1);
     }
   };
 
   const gotoNext = () => {
     if (currentPage < totalPage) {
-      setCurrentPage((prev) => prev + 1);
+      onPageChage(currentPage + 1);
     }
   };
 
@@ -55,8 +60,10 @@ export function Pagination({ pageSize }: PaginationProps) {
       <div className={styles["pagination-button-wrapper"]}>
         {visiblePages.map((number) => (
           <button
-            className={styles["pagination-button"]}
-            onClick={() => setCurrentPage(number)}
+            className={`${styles["pagination-button"]} ${
+              currentPage === number ? styles.active : ""
+            }`}
+            onClick={() => onPageChage(number)}
           >
             {number}
           </button>

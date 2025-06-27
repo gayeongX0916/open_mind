@@ -15,14 +15,17 @@ const ListPage = () => {
   const [list, setList] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const router = useRouter();
+  const limitSize = 8;
+
+  const fetchData = async (page: number) => {
+    const offset = (page - 1) * limitSize;
+    const { results } = await getSubjects(limitSize, offset);
+    setList(results);
+  };
 
   useEffect(() => {
-    const fetchData = async () => {
-      const { results } = await getSubjects();
-      setList(results);
-    };
-    fetchData();
-  }, []);
+    fetchData(currentPage);
+  }, [currentPage]);
 
   return (
     <main className={styles["list-page"]}>
@@ -68,7 +71,11 @@ const ListPage = () => {
         ))}
       </ul>
       <nav className={styles["pagination"]}>
-        <Pagination pageSize={8} />
+        <Pagination
+          pageSize={8}
+          currentPage={currentPage}
+          onPageChage={setCurrentPage}
+        />
       </nav>
     </main>
   );
