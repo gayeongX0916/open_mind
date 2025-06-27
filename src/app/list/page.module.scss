@@ -1,0 +1,62 @@
+@use "@/styles/_color.scss" as *;
+@use "@/styles/_typography.scss" as *;
+@use "@/styles/_shadow.scss" as *;
+
+.list-page {
+  padding-top: 45px;
+  padding-left: 130px;
+  padding-right: 130px;
+}
+
+.top-wrapper {
+  display: flex;
+  justify-content: space-between;
+}
+
+.logo-button,
+.user-card-button {
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  margin: 0;
+  padding: 0;
+}
+
+.logo {
+  display: block;
+}
+
+.title {
+  @include heading-1;
+  display: flex;
+  justify-content: center;
+  margin-top: 46px;
+  margin-bottom: 20px;
+}
+
+.dropdown {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.user-card-wrapper {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  gap: 20px;
+  padding: 0;
+  max-width: 940px;
+  margin: 0 auto;
+  list-style: none;
+}
+
+.user-card-button {
+  width: 100%;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
+}
