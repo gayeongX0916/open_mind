@@ -1,0 +1,28 @@
+@use "@/styles/_color.scss" as *;
+@use "@/styles/_typography.scss" as *;
+
+.pagination {
+  display: flex;
+  align-items: center;
+  column-gap: 30px;
+}
+
+.arrow-button,
+.pagination-button {
+  border: none;
+  background-color: transparent;
+  margin: 0;
+  padding: 0;
+  cursor: pointer;
+}
+
+.pagination-button-wrapper {
+  display: flex;
+  align-items: center;
+  column-gap: 30px;
+}
+
+.pagination-button {
+  @include body-1;
+  color: $gray-40;
+}
