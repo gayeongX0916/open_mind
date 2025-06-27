@@ -1,4 +1,4 @@
-export async function createFeed(data: { name: string; team: string }) {
+export async function postSubjects(data: { name: string; team: string }) {
   try {
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_API_BASE_URL}/subjects/`,
