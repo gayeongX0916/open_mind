@@ -33,11 +33,8 @@ const ListPage = () => {
     while (true) {
       const { results } = await getSubjects(limitSize, offset);
       allData = [...allData, ...results];
-      console.log(results);
-      console.log(allData);
 
       if (results.length < limitSize) {
-        // 더 이상 데이터가 없으면 종료
         break;
       }
 
