@@ -60,6 +60,7 @@ export function Pagination({
       <div className={styles["pagination-button-wrapper"]}>
         {visiblePages.map((number) => (
           <button
+            key={number}
             className={`${styles["pagination-button"]} ${
               currentPage === number ? styles.active : ""
             }`}

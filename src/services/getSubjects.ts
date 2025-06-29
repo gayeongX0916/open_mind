@@ -1,4 +1,4 @@
-export async function getSubjects(limit?: number, offset?: number) {
+export async function getSubjects(limit = 8, offset = 0) {
   try {
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_API_BASE_URL}/subjects/?limit=${limit}&offset=${offset}`,

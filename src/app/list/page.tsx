@@ -11,21 +11,64 @@ import { Pagination } from "@/components/common/Pagination";
 import { useEffect, useState } from "react";
 import { getSubjects } from "@/services/getSubjects";
 
+type Subjects = {
+  id: number;
+  name: string;
+  questionCount: number;
+  imageSource: string;
+  createdAt: string;
+};
+
 const ListPage = () => {
-  const [list, setList] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
+  const [sortedList, setSortedList] = useState<Subjects[]>([]);
+  const [sortedOption, setSortedOption] = useState("최신순");
   const router = useRouter();
   const limitSize = 8;
 
-  const fetchData = async (page: number) => {
-    const offset = (page - 1) * limitSize;
-    const { results } = await getSubjects(limitSize, offset);
-    setList(results);
+  const fetchAllSubjects = async () => {
+    let offset = 0;
+    let allData: Subjects[] = [];
+
+    while (true) {
+      const { results } = await getSubjects(limitSize, offset);
+      allData = [...allData, ...results];
+      console.log(results);
+      console.log(allData);
+
+      if (results.length < limitSize) {
+        // 더 이상 데이터가 없으면 종료
+        break;
+      }
+
+      offset += limitSize;
+    }
+
+    const sorted = sortedSubjects(allData, sortedOption);
+    setSortedList(sorted);
+    setCurrentPage(1);
   };
 
   useEffect(() => {
-    fetchData(currentPage);
-  }, [currentPage]);
+    fetchAllSubjects();
+  }, [sortedOption]);
+
+  const sortedSubjects = (data: Subjects[], option: string) => {
+    const copy = [...data];
+    if (option === "이름순") {
+      return copy.sort((a, b) => a.name.localeCompare(b.name));
+    } else {
+      return copy.sort(
+        (a, b) =>
+          new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+      );
+    }
+  };
+
+  const paginatedList = sortedList.slice(
+    (currentPage - 1) * limitSize,
+    currentPage * limitSize
+  );
 
   return (
     <main className={styles["list-page"]}>
@@ -52,10 +95,13 @@ const ListPage = () => {
       </header>
       <h1 className={styles.title}>누구에게 질문할까요?</h1>
       <div className={styles.dropdown}>
-        <Dropdown />
+        <Dropdown
+          sortedOption={sortedOption}
+          setSortedOption={setSortedOption}
+        />
       </div>
       <ul className={styles["user-card-wrapper"]}>
-        {list.map(({ id, imageSource, name, questionCount }) => (
+        {paginatedList.map(({ id, imageSource, name, questionCount }) => (
           <li key={id}>
             <button
               className={styles["user-card-button"]}

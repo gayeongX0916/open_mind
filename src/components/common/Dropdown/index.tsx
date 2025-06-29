@@ -6,9 +6,13 @@ import arrowDownGray from "@/assets/arrow_down_gray.svg";
 import arrowUp from "@/assets/arrow_up.svg";
 import { useEffect, useRef, useState } from "react";
 
-export function Dropdown() {
+type DropdownProps = {
+  sortedOption: string;
+  setSortedOption: (valie: string) => void;
+};
+
+export function Dropdown({sortedOption,setSortedOption}:DropdownProps) {
   const [isOpen, setIsOpen] = useState(false);
-  const [selected, setSelected] = useState("이름순");
   const sortDropdownRef = useRef<HTMLDivElement>(null);
 
   const handleClickOutside = (e: MouseEvent) => {
@@ -33,7 +37,7 @@ export function Dropdown() {
         }`}
         onClick={() => setIsOpen(!isOpen)}
       >
-        {selected}
+        {sortedOption}
         <Image
           src={isOpen ? arrowUp : arrowDownGray}
           alt="드롭다운 아이콘"
@@ -48,7 +52,7 @@ export function Dropdown() {
               key={option}
               className={styles["dropdown__menu-button"]}
               onClick={() => {
-                setSelected(option);
+                setSortedOption(option);
                 setIsOpen(false);
               }}
             >
