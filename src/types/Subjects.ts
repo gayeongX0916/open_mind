@@ -10,7 +10,7 @@ export type Answers = {
   id: number;
   questionId: number;
   content: string;
-  isRejcted: boolean;
+  isRejected: boolean;
   createdAt: string;
 };
 
