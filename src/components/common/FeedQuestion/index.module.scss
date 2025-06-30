@@ -7,6 +7,7 @@
   flex-direction: column;
   justify-content: flex-start;
   row-gap: 4px;
+  margin-bottom: 32px;
 
   &__top-wrapper {
     @include caption-1;

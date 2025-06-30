@@ -10,12 +10,12 @@
   box-shadow: $shadow-1;
   display: flex;
   flex-direction: column;
-  row-gap: 32px;
 
   &__badge-wrapper {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin-bottom: 32px;
   }
 
   &__more-wrapper {
@@ -43,6 +43,7 @@
   &__bottom-line {
     height: 1px;
     background-color: $gray-30;
+    margin-bottom: 24px;
   }
 
   &__reaction-wrapper {
