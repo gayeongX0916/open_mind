@@ -10,9 +10,10 @@ import { useState } from "react";
 
 type ReationProps = {
   mode: "good" | "bad";
+  count?: number;
 };
 
-export function Reaction({ mode }: ReationProps) {
+export function Reaction({ mode, count }: ReationProps) {
   const reactionList = {
     good: {
       img: thumbsUpGray,
@@ -57,7 +58,7 @@ export function Reaction({ mode }: ReationProps) {
                 clicked ? styles["active-label-count"] : ""
               }`}
             >
-              9
+              {count}
             </span>
           ) : (
             ""

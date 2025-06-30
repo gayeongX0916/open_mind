@@ -1,7 +1,7 @@
 import styles from "./index.module.scss";
 import arrowLeft from "@/assets/arrow_left.svg";
 import arrowRight from "@/assets/arrow_right.svg";
-import { getSubjects } from "@/services/getSubjects";
+import { getSubjects } from "@/services/subjects/getSubjects";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 

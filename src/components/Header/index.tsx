@@ -6,15 +6,32 @@ import logo from "@/assets/logo.svg";
 import { ShareButton } from "../common/Button";
 import backgroundImg from "@/assets/post_background.svg";
 import { Toast } from "../common/Toast";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { Subjects } from "@/types/Subjects";
+import getSubjectsDetails from "@/services/subjects/getSubjectsDetail";
 
 type HeaderProps = {
-  img: string;
-  nickname: string;
+  subjectId: number;
 };
 
-export default function Header({ img, nickname }: HeaderProps) {
+export default function Header({ subjectId }: HeaderProps) {
   const [toastMessage, setToastMessage] = useState("");
+  const [details, setDetails] = useState<Subjects>({
+    id: 0,
+    name: "",
+    questionCount: 0,
+    imageSource: "",
+    createdAt: "",
+  });
+
+  useEffect(() => {
+    const fetchDetailSubjects = async (id: number) => {
+      const data = await getSubjectsDetails(id);
+      setDetails(data);
+    };
+
+    fetchDetailSubjects(Number(subjectId));
+  }, [subjectId]);
 
   const handleOnClickLink = () => {
     const currentURL = window.location.href;
@@ -32,8 +49,8 @@ export default function Header({ img, nickname }: HeaderProps) {
       window.Kakao.Share.sendCustom({
         templateId: 121919,
         templateArgs: {
-          img: "https://fastly.picsum.photos/id/432/200/200.jpg?hmac=b4-kxXh_oTpvCBH9hueJurvHDdhy0eYNNba-mO9Q8bU", // 이미지 수정하기
-          nickname: nickname,
+          img: details.imageSource,
+          nickname: details.name,
         },
       });
     } else {
@@ -62,8 +79,16 @@ export default function Header({ img, nickname }: HeaderProps) {
         height={67}
         className={styles["header-logo"]}
       />
-      <Image src={img} alt="프로필" width={136} height={136} />
-      <span className={styles.nickname}>{nickname}</span>
+      {details.imageSource && (
+        <Image
+          src={details.imageSource}
+          alt="프로필"
+          width={136}
+          height={136}
+          className={styles["profile-img"]}
+        />
+      )}
+      <span className={styles.nickname}>{details.name}</span>
       <div className={styles["button-wrapper"]}>
         <ShareButton mode="link" onClick={handleOnClickLink} />
         <ShareButton mode="kakao" onClick={handleOnClickKakao} />

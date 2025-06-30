@@ -24,6 +24,11 @@
   object-fit: cover;
 }
 
+.profile-img {
+  border-radius: 50%;
+  object-fit: cover;
+}
+
 .nickname {
   @include heading-2;
   color: $gray-60;
