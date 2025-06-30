@@ -32,8 +32,12 @@
     @include caption-1;
     color: $gray-40;
 
-    &.active-label-count {
+    &.active-label-good-count {
       color: $blue-50;
+    }
+
+    &.active-label-bad-count {
+      color: $gray-60;
     }
   }
 }
