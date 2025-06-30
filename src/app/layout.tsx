@@ -1,6 +1,13 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.scss";
+import KakaoScript from "@/services/KakaoScript";
+
+declare global {
+  interface Window {
+    Kakao: any;
+  }
+}
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -14,7 +21,8 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "OPENMIND",
-  description: "익명으로 게시글을 작성하고 반응을 주고받을 수 있는 간단한 SNS 게시판",
+  description:
+    "익명으로 게시글을 작성하고 반응을 주고받을 수 있는 간단한 SNS 게시판",
 };
 
 export default function RootLayout({
@@ -26,6 +34,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
         {children}
+        <KakaoScript />
       </body>
     </html>
   );

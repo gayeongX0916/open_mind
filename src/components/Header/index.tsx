@@ -27,8 +27,25 @@ export default function Header({ img, nickname }: HeaderProps) {
     }
   };
 
-  const handleOnClickKakao = () => {};
-  const handleOnClickFacebook = () => {};
+  const handleOnClickKakao = () => {
+    if (window.Kakao && window.Kakao.Share) {
+      window.Kakao.Share.sendCustom({
+        templateId: 121919,
+        templateArgs: {
+          img: "https://fastly.picsum.photos/id/432/200/200.jpg?hmac=b4-kxXh_oTpvCBH9hueJurvHDdhy0eYNNba-mO9Q8bU", // 이미지 수정하기
+          nickname: nickname,
+        },
+      });
+    } else {
+      console.log("Kakao SDK 로드 실패");
+    }
+  };
+
+  const handleOnClickFacebook = () => {
+    return window.open(
+      "http://www.facebook.com/sharer/sharer.php?u=" + location.href
+    );
+  };
 
   return (
     <header className={styles["header"]}>
