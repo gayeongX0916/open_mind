@@ -7,15 +7,16 @@ import styles from "./index.module.scss";
 import { FeedQuestion } from "../FeedQuestion";
 import { Reaction } from "../Reaction";
 import { FeedAnswer } from "../FeedAnswer";
-import exmapleIcon from "@/assets/facebook_icon.svg";
-import { ActionDropdown } from "../Dropdown";
 import { useEffect, useRef, useState } from "react";
+import { KebabMenu } from "../KebabMenu";
+import { SubjectsQuestions } from "@/types/Subjects";
 
-type FeedCardProps = {};
+type FeedCardProps = {
+  item: SubjectsQuestions;
+};
 
-export function FeedCard({}: FeedCardProps) {
+export function FeedCard({ item }: FeedCardProps) {
   const [isOpen, setIsOpen] = useState(false);
-  const [answerCompleted, setAnswerCompleted] = useState(false);
   const actionDropdownRef = useRef<HTMLDivElement>(null);
 
   const handleClickOpen = () => {
@@ -39,7 +40,7 @@ export function FeedCard({}: FeedCardProps) {
   return (
     <div className={styles["feed-card"]}>
       <div className={styles["feed-card__badge-wrapper"]}>
-        {answerCompleted ? (
+        {item.answer !== null ? (
           <Badge mode="complete">답변 완료</Badge>
         ) : (
           <Badge>미답변</Badge>
@@ -62,21 +63,25 @@ export function FeedCard({}: FeedCardProps) {
               className={styles["feed-card__dropdown"]}
               ref={actionDropdownRef}
             >
-              <ActionDropdown />
+              <KebabMenu
+                onEdit={() => console.log("")}
+                onDelete={() => console.log("")}
+                onReject={() => console.log("")}
+              />
             </div>
           )}
         </div>
       </div>
-      <FeedQuestion question="좋아하는 동물은?" />
-      <FeedAnswer
-        img={exmapleIcon}
-        isCompleted={answerCompleted}
-        onComplete={() => setAnswerCompleted(true)}
+
+      <FeedQuestion question={item.content} createdAt={item.createdAt} />
+
+      <FeedAnswer subjectId={item.subjectId} answers={item.answer}
       />
+
       <div className={styles["feed-card__bottom-line"]}></div>
       <div className={styles["feed-card__reaction-wrapper"]}>
-        <Reaction mode="good" />
-        <Reaction mode="bad" />
+        <Reaction mode="good" goodCount={item.like} />
+        <Reaction mode="bad" badCount={item.dislike}/>
       </div>
     </div>
   );
