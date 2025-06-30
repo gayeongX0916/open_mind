@@ -8,7 +8,7 @@ import { ArrowButton } from "@/components/common/Button";
 import { useRouter } from "next/navigation";
 import { InputField } from "@/components/common/Input";
 import { useState } from "react";
-import { createFeed } from "@/services/createFeed";
+import { postSubjects } from "@/services/postSubjects";
 
 const Home = () => {
   const router = useRouter();
@@ -17,13 +17,12 @@ const Home = () => {
   const handleSubmit = async (e: any) => {
     e.preventDefault();
 
-    const data = await createFeed({ name: nameInput, team: "1-50" });
-    const userId = data.id;
-    router.push(`/post/${userId}/answer`);
+    const { id } = await postSubjects({ name: nameInput, team: "1-50" });
+    router.push(`/post/${id}/answer`);
   };
 
   return (
-    <main className={styles.main}>
+    <main className={styles["home-page"]}>
       <div className={styles["button-wrapper"]}>
         <ArrowButton
           mode="answer"
