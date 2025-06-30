@@ -3,30 +3,70 @@
 import Image from "next/image";
 import styles from "./index.module.scss";
 import { InputTextarea } from "../Input";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ArrowButton } from "../Button";
+import getSubjectsDetails from "@/services/subjects/getSubjectsDetail";
+import { Answers } from "@/types/Subjects";
 
 type FeedAnswerProps = {
-  img: string;
-  onComplete: () => void;
-  isCompleted: boolean;
+  subjectId: number;
+  answers: Answers;
 };
 
-export function FeedAnswer({ img, onComplete, isCompleted }: FeedAnswerProps) {
+export function FeedAnswer({ subjectId, answers }: FeedAnswerProps) {
   const [value, setValue] = useState("");
+  const [imageURL, setImageURL] = useState("");
+  const [nickname, setNickname] = useState("");
+
+  // useEffect(() => {
+  //   const fetchDetailSubjects = async (id: number) => {
+  //     const { imageSource, name } = await getSubjectsDetails(id);
+  //     setImageURL(imageSource);
+  //     setNickname(name);
+  //   };
+
+  //   fetchDetailSubjects(Number(subjectId));
+  // }, [subjectId]);
+
+  console.log(answers);
 
   return (
     <div className={styles["feed-answer"]}>
-      <Image
-        src={img}
-        alt="프로필"
-        width={48}
-        height={48}
-        className={styles["feed-answer__profile"]}
-      />
-      <div className={styles["feed-answer__right-wrapper"]}>
-        <span className={styles["feed-answer__nickname"]}>닉네임</span>
-        {isCompleted ? (
+      {answers === null ? (
+        <></>
+      ) : (
+        <div className={styles["feed-answer__content"]}>
+          {imageURL && (
+            <Image
+              src={imageURL}
+              alt="프로필"
+              width={48}
+              height={48}
+              className={styles["feed-answer__profile"]}
+            />
+          )}
+          <div className={styles["feed-answer__right-wrapper"]}>
+            <div className={styles["feed-answer__top-wrapper"]}>
+              <span className={styles["feed-answer__nickname"]}>
+                {nickname}
+              </span>
+              <span className={styles["feed-answer__createdAt"]}>
+                {answers?.createdAt}
+              </span>
+            </div>
+            {answers?.isRejected ? (
+              <span className={styles["feed-answer__rejected-answer"]}>
+                답변 거절
+              </span>
+            ) : (
+              <span className={styles["feed-answer__complete-answer"]}>
+                {answers?.content}
+              </span>
+            )}
+          </div>
+        </div>
+      )}
+      {/* {value === "" ? (
           <span className={styles["feed-answer__complete-answer"]}>
             {value}
           </span>
@@ -37,15 +77,18 @@ export function FeedAnswer({ img, onComplete, isCompleted }: FeedAnswerProps) {
             placeholder="답변을 입력해주세요"
           />
         )}
-        {!isCompleted &&
+        {value !== "" &&
           (value ? (
-            <ArrowButton mode="question" showArrow={false} onClick={onComplete}>
+            <ArrowButton
+              mode="question"
+              showArrow={false}
+              onClick={() => console.log("")}
+            >
               답변 완료
             </ArrowButton>
           ) : (
             <button className={styles["feed-answer__button"]}>답변 완료</button>
-          ))}
-      </div>
+          ))} */}
     </div>
   );
 }

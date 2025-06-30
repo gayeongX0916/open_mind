@@ -10,9 +10,11 @@ import { useState } from "react";
 
 type ReationProps = {
   mode: "good" | "bad";
+  goodCount?: number;
+  badCount?: number;
 };
 
-export function Reaction({ mode }: ReationProps) {
+export function Reaction({ mode, goodCount, badCount }: ReationProps) {
   const reactionList = {
     good: {
       img: thumbsUpGray,
@@ -54,10 +56,21 @@ export function Reaction({ mode }: ReationProps) {
           {mode === "good" ? (
             <span
               className={`${styles["reaction__label-count"]} ${
-                clicked ? styles["active-label-count"] : ""
+                clicked ? styles["active-label-good-count"] : ""
               }`}
             >
-              9
+              {goodCount}
+            </span>
+          ) : (
+            ""
+          )}
+          {mode === "bad" ? (
+            <span
+              className={`${styles["reaction__label-count"]} ${
+                clicked ? styles["active-label-bad-count"] : ""
+              }`}
+            >
+              {badCount}
             </span>
           ) : (
             ""

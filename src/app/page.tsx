@@ -8,7 +8,7 @@ import { ArrowButton } from "@/components/common/Button";
 import { useRouter } from "next/navigation";
 import { InputField } from "@/components/common/Input";
 import { useState } from "react";
-import { postSubjects } from "@/services/postSubjects";
+import { postSubjects } from "@/services/subjects/postSubjects";
 
 const Home = () => {
   const router = useRouter();

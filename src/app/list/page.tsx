@@ -9,15 +9,8 @@ import { Dropdown } from "@/components/common/Dropdown";
 import { UserCard } from "@/components/common/UserCard";
 import { Pagination } from "@/components/common/Pagination";
 import { useEffect, useState } from "react";
-import { getSubjects } from "@/services/getSubjects";
-
-type Subjects = {
-  id: number;
-  name: string;
-  questionCount: number;
-  imageSource: string;
-  createdAt: string;
-};
+import { getSubjects } from "@/services/subjects/getSubjects";
+import { Subjects } from "@/types/Subjects";
 
 const ListPage = () => {
   const [currentPage, setCurrentPage] = useState(1);
