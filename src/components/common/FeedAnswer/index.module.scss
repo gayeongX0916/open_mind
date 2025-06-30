@@ -37,6 +37,11 @@
     color: $gray-40;
   }
 
+  &__rejected-answer {
+    @include body-3;
+    color: $red-50;
+  }
+
   &__complete-answer {
     @include body-3;
     color: $gray-60;
