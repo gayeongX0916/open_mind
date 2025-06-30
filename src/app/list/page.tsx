@@ -115,7 +115,7 @@ const ListPage = () => {
       </ul>
       <nav className={styles["pagination"]}>
         <Pagination
-          pageSize={8}
+          pageSize={limitSize}
           currentPage={currentPage}
           onPageChage={setCurrentPage}
         />

@@ -10,6 +10,9 @@
   background-color: $gray-60;
   color: $gray-10;
   display: inline-block;
+  z-index: 10;
+  position: absolute;
+  bottom: 30px;
 
   animation: fadeOut 5s ease-in-out forwards;
 }

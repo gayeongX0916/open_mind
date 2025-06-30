@@ -60,7 +60,7 @@
   cursor: pointer;
 }
 
-.delete-button{
+.delete-button {
   @include caption-1;
 }
 
@@ -72,6 +72,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
 
   &.link-button {
     background-color: $brown-40;
