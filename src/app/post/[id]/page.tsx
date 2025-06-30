@@ -2,7 +2,7 @@
 
 import styles from "./page.module.scss";
 import Header from "@/components/Header";
-import messageIcon from "@/assets/message_brown.svg";
+import messageIcon from "@/assets/message_brown_icon.svg";
 import emptyBoxIcon from "@/assets/empty_box.svg";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -52,7 +52,7 @@ const FeedDetailPage = () => {
             />
           </div>
         ) : (
-          <div className={styles['question-container']}>
+          <div className={styles["question-container"]}>
             <div className={styles["top-wrapper"]}>
               <Image
                 alt="메세지 아이콘"
