@@ -14,6 +14,7 @@ type ArrowButtonProps = {
   children: ReactNode;
   onClick: () => void;
   showArrow: boolean;
+  disabled?: boolean;
 };
 
 type FloatingButtonProps = {
@@ -32,6 +33,7 @@ export function ArrowButton({
   children,
   onClick,
   showArrow,
+  disabled,
 }: ArrowButtonProps) {
   return (
     <>
@@ -45,6 +47,7 @@ export function ArrowButton({
           }
         `}
         onClick={onClick}
+        disabled={disabled}
       >
         {children}
         {showArrow && (
@@ -60,10 +63,19 @@ export function ArrowButton({
   );
 }
 
-export function FloatingButton({mode='question', children, onClick }: FloatingButtonProps) {
+export function FloatingButton({
+  mode = "question",
+  children,
+  onClick,
+}: FloatingButtonProps) {
   return (
     <>
-      <button className={`${styles["floating-button"]} ${mode==="delete" ? styles["delete-button"] : ""}`} onClick={onClick}>
+      <button
+        className={`${styles["floating-button"]} ${
+          mode === "delete" ? styles["delete-button"] : ""
+        }`}
+        onClick={onClick}
+      >
         {children}
       </button>
     </>
