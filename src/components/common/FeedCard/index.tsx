@@ -16,6 +16,7 @@ type FeedCardProps = {
 };
 
 export function FeedCard({ item }: FeedCardProps) {
+  const storedId = JSON.parse(localStorage.getItem("personalId") || "[]");
   const [isOpen, setIsOpen] = useState(false);
   const actionDropdownRef = useRef<HTMLDivElement>(null);
 
@@ -37,6 +38,8 @@ export function FeedCard({ item }: FeedCardProps) {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
+  const isOwner = Number(storedId) === item.subjectId;
+
   return (
     <div className={styles["feed-card"]}>
       <div className={styles["feed-card__badge-wrapper"]}>
@@ -45,43 +48,44 @@ export function FeedCard({ item }: FeedCardProps) {
         ) : (
           <Badge>미답변</Badge>
         )}
-        <div className={styles["feed-card__more-wrapper"]}>
-          <button
-            className={styles["feed-card__more-button"]}
-            onClick={handleClickOpen}
-          >
-            <Image
-              src={moreIcon}
-              alt="더보기"
-              width={26}
-              height={26}
-              className={styles["feed-card__more-img"]}
-            />
-          </button>
-          {isOpen && (
-            <div
-              className={styles["feed-card__dropdown"]}
-              ref={actionDropdownRef}
+        {isOwner && (
+          <div className={styles["feed-card__more-wrapper"]}>
+            <button
+              className={styles["feed-card__more-button"]}
+              onClick={handleClickOpen}
             >
-              <KebabMenu
-                onEdit={() => console.log("")}
-                onDelete={() => console.log("")}
-                onReject={() => console.log("")}
+              <Image
+                src={moreIcon}
+                alt="더보기"
+                width={26}
+                height={26}
+                className={styles["feed-card__more-img"]}
               />
-            </div>
-          )}
-        </div>
+            </button>
+            {isOpen && (
+              <div
+                className={styles["feed-card__dropdown"]}
+                ref={actionDropdownRef}
+              >
+                <KebabMenu
+                  onEdit={() => console.log("")}
+                  onDelete={() => console.log("")}
+                  onReject={() => console.log("")}
+                />
+              </div>
+            )}
+          </div>
+        )}
       </div>
 
       <FeedQuestion question={item.content} createdAt={item.createdAt} />
 
-      <FeedAnswer subjectId={item.subjectId} answers={item.answer}
-      />
+      <FeedAnswer subjectId={item.subjectId} answers={item.answer} />
 
       <div className={styles["feed-card__bottom-line"]}></div>
       <div className={styles["feed-card__reaction-wrapper"]}>
         <Reaction mode="good" goodCount={item.like} />
-        <Reaction mode="bad" badCount={item.dislike}/>
+        <Reaction mode="bad" badCount={item.dislike} />
       </div>
     </div>
   );

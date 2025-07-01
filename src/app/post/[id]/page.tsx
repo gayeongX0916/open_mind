@@ -52,7 +52,7 @@ const FeedDetailPage = () => {
             />
           </div>
         ) : (
-          <div className={styles['question-container']}>
+          <div className={styles["question-container"]}>
             <div className={styles["top-wrapper"]}>
               <Image
                 alt="메세지 아이콘"
