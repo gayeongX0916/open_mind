@@ -11,11 +11,13 @@ import Image from "next/image";
 import { FloatingButton } from "@/components/common/Button";
 import { FeedCard } from "@/components/common/FeedCard";
 import getSubjectsQuestions from "@/services/subjects/getSubjectsQuestions";
+import Modal from "@/components/common/Modal";
 
 const FeedDetailPage = () => {
   const { id } = useParams();
   const [questionCount, setQuestionCount] = useState(0);
   const [questionList, setQuestionList] = useState<SubjectsQuestions[]>([]);
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     const fetchQuestionList = async (id: number) => {
@@ -27,8 +29,15 @@ const FeedDetailPage = () => {
     fetchQuestionList(Number(id));
   }, [id]);
 
+  const handleOpenModal = () => {
+    setShowModal(true);
+  };
+
   return (
     <div className={styles["feed-detail-page"]}>
+      {showModal && (
+        <Modal subjectId={Number(id)} onModalChange={setShowModal} />
+      )}
       <Header subjectId={Number(id)} />
       <div className={styles.question}>
         {questionCount === 0 ? (
@@ -71,7 +80,7 @@ const FeedDetailPage = () => {
         )}
       </div>
       <div className={styles["floating-button"]}>
-        <FloatingButton onClick={() => console.log("질문 작성하기")}>
+        <FloatingButton onClick={handleOpenModal}>
           질문 작성하기
         </FloatingButton>
       </div>
