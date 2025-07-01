@@ -18,6 +18,12 @@ const Home = () => {
     e.preventDefault();
 
     const { id } = await postSubjects({ name: nameInput, team: "1-50" });
+
+    const stored: string[] = JSON.parse(
+      localStorage.getItem("personalId") || "[]"
+    );
+    stored.push(id);
+    localStorage.setItem("personalId", id);
     router.push(`/post/${id}/answer`);
   };
 
