@@ -7,10 +7,11 @@ import { useEffect, useState } from "react";
 import { ArrowButton } from "../Button";
 import getSubjectsDetails from "@/services/subjects/getSubjectsDetail";
 import { Answers } from "@/types/Subjects";
+import { useRelativeDate } from "@/hooks/useRelativeDate";
 
 type FeedAnswerProps = {
   subjectId: number;
-  answers: Answers;
+  answers: Answers | null;
 };
 
 export function FeedAnswer({ subjectId, answers }: FeedAnswerProps) {
@@ -51,16 +52,16 @@ export function FeedAnswer({ subjectId, answers }: FeedAnswerProps) {
                 {nickname}
               </span>
               <span className={styles["feed-answer__createdAt"]}>
-                {answers?.createdAt}
+                {useRelativeDate(answers.createdAt)}
               </span>
             </div>
-            {answers?.isRejected ? (
+            {answers.isRejected ? (
               <span className={styles["feed-answer__rejected-answer"]}>
                 답변 거절
               </span>
             ) : (
               <span className={styles["feed-answer__complete-answer"]}>
-                {answers?.content}
+                {answers.content}
               </span>
             )}
           </div>
