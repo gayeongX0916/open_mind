@@ -18,6 +18,7 @@ const ListPage = () => {
   const [sortedOption, setSortedOption] = useState("최신순");
   const router = useRouter();
   const limitSize = 8;
+  const storedId = JSON.parse(localStorage.getItem("personalId") || "[]");
 
   const fetchAllSubjects = async () => {
     let offset = 0;
@@ -60,6 +61,14 @@ const ListPage = () => {
     currentPage * limitSize
   );
 
+  const handlePageChange = (id: number) => {
+    if (id === storedId) {
+      router.push(`/post/${id}/answer`);
+    } else {
+      router.push(`/post/${id}`);
+    }
+  };
+
   return (
     <main className={styles["list-page"]}>
       <header className={styles["top-wrapper"]}>
@@ -95,7 +104,7 @@ const ListPage = () => {
           <li key={id}>
             <button
               className={styles["user-card-button"]}
-              onClick={() => router.push(`/post/${id}`)}
+              onClick={() => handlePageChange(id)}
             >
               <UserCard
                 img={imageSource}
