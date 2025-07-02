@@ -1,0 +1,38 @@
+@use "@/styles/_color.scss" as *;
+@use "@/styles/_typography.scss" as *;
+@use "@/styles/_shadow.scss" as *;
+
+.question{
+   padding: 16px 24px;
+  border-radius: 16px;
+  background-color: $brown-10;
+  border: 1px solid $brown-20;
+  margin: 0 auto;
+  margin-top: 20px;
+  width: 716px;
+}
+
+.question-empty {
+  height: 330px;
+  row-gap: 70px;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+}
+
+.question-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  row-gap: 16px;
+}
+
+.top-wrapper {
+  display: flex;
+  column-gap: 8px;
+}
+
+.question-count {
+  @include body-1;
+  color: $brown-40;
+}

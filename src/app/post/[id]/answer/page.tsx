@@ -10,6 +10,7 @@ import { useEffect, useState } from "react";
 import { SubjectsQuestions } from "@/types/Subjects";
 import { FeedCard } from "@/components/common/FeedCard";
 import getSubjectsQuestions from "@/services/subjects/getSubjectsQuestions";
+import QuestionList from "@/components/QuestionList";
 
 export default function postAnswerPage() {
   const { id } = useParams();
@@ -35,22 +36,10 @@ export default function postAnswerPage() {
             삭제하기
           </FloatingButton>
         </div>
-        <div className={styles["question-container"]}>
-          <div className={styles["top-wrapper"]}>
-            <Image
-              alt="메세지 아이콘"
-              src={messageIcon}
-              width={24}
-              height={24}
-            />
-            <span className={styles["question-count"]}>
-              {questionCount}개의 질문이 있습니다.
-            </span>
-          </div>
-          {questionList.map((item) => (
-            <FeedCard key={item.id} item={item} />
-          ))}
-        </div>
+        <QuestionList
+          questionCount={questionCount}
+          questionList={questionList}
+        />
       </div>
     </div>
   );

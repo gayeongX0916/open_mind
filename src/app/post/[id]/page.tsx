@@ -12,6 +12,7 @@ import { FloatingButton } from "@/components/common/Button";
 import { FeedCard } from "@/components/common/FeedCard";
 import getSubjectsQuestions from "@/services/subjects/getSubjectsQuestions";
 import Modal from "@/components/common/Modal";
+import QuestionList from "@/components/QuestionList";
 
 const FeedDetailPage = () => {
   const { id } = useParams();
@@ -39,50 +40,9 @@ const FeedDetailPage = () => {
         <Modal subjectId={Number(id)} onModalChange={setShowModal} />
       )}
       <Header subjectId={Number(id)} />
-      <div className={styles.question}>
-        {questionCount === 0 ? (
-          <div className={styles["question-empty"]}>
-            <div className={styles["top-wrapper"]}>
-              <Image
-                alt="메세지 아이콘"
-                src={messageIcon}
-                width={24}
-                height={24}
-              />
-              <span className={styles["question-count"]}>
-                아직 질문이 없습니다.
-              </span>
-            </div>
-            <Image
-              alt="빈 질문함"
-              src={emptyBoxIcon}
-              width={150}
-              height={154}
-            />
-          </div>
-        ) : (
-          <div className={styles["question-container"]}>
-            <div className={styles["top-wrapper"]}>
-              <Image
-                alt="메세지 아이콘"
-                src={messageIcon}
-                width={24}
-                height={24}
-              />
-              <span className={styles["question-count"]}>
-                {questionCount}개의 질문이 있습니다.
-              </span>
-            </div>
-            {questionList.map((item) => (
-              <FeedCard key={item.id} item={item} />
-            ))}
-          </div>
-        )}
-      </div>
+      <QuestionList questionCount={questionCount} questionList={questionList} />
       <div className={styles["floating-button"]}>
-        <FloatingButton onClick={handleOpenModal}>
-          질문 작성하기
-        </FloatingButton>
+        <FloatingButton onClick={handleOpenModal}>질문 작성하기</FloatingButton>
       </div>
     </div>
   );
