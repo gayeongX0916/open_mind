@@ -12,6 +12,7 @@ import { KebabMenu } from "../KebabMenu";
 import { Answers, SubjectsQuestions } from "@/types/Subjects";
 import putAnswers from "@/services/answers/putAnswers";
 import deleteAnswers from "@/services/answers/deleteAnswers";
+import patchAnswers from "@/services/answers/patchAnswers";
 
 type FeedCardProps = {
   item: SubjectsQuestions;
@@ -58,6 +59,19 @@ export function FeedCard({ item }: FeedCardProps) {
     }
   };
 
+  const handleRejectAnswer = async () => {
+    try {
+      const updatedAnswer = await patchAnswers({
+        isRejected: true,
+        id: String(item.answer.id),
+      });
+      setAnswer(updatedAnswer);
+      setIsOpen(false);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <div className={styles["feed-card"]}>
       <div className={styles["feed-card__badge-wrapper"]}>
@@ -88,7 +102,7 @@ export function FeedCard({ item }: FeedCardProps) {
                 <KebabMenu
                   onEdit={handleIsEditing}
                   onDelete={handleDeleteAnswer}
-                  onReject={() => console.log("")}
+                  onReject={handleRejectAnswer}
                 />
               </div>
             )}

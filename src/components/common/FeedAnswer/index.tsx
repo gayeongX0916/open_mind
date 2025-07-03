@@ -85,31 +85,7 @@ export function FeedAnswer({
 
     setIsCompleted(true);
   };
-  //   return (
-  //     <div className={styles["feed-answer__content"]}>
-  //       {imageURL && (
-  //         <Image
-  //           src={imageURL}
-  //           alt="프로필"
-  //           width={48}
-  //           height={48}
-  //           className={styles["feed-answer__profile"]}
-  //         />
-  //       )}
-  //       <div className={styles["feed-answer__right-wrapper"]}>
-  //         <div className={styles["feed-answer__top-wrapper"]}>
-  //           <span className={styles["feed-answer__nickname"]}>{nickname}</span>
-  //           {isCompleted && answers && (
-  //             <span className={styles["feed-answer__createdAt"]}>
-  //               {relativeDate}
-  //             </span>
-  //           )}
-  //         </div>
-  //       </div>
-  //     </div>
-  //   );
-  // };
-
+  
   const renderTextarea = () => {
     return (
       <form className={styles["textarea-form"]}>
