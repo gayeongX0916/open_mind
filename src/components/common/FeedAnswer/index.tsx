@@ -33,6 +33,9 @@ export function FeedAnswer({
   useEffect(() => {
     if (answers) {
       setIsCompleted(true);
+    } else {
+      setIsCompleted(false);
+      setValue("");
     }
   }, [answers]);
 
