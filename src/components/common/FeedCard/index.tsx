@@ -9,7 +9,10 @@ import { Reaction } from "../Reaction";
 import { FeedAnswer } from "../FeedAnswer";
 import { useEffect, useRef, useState } from "react";
 import { KebabMenu } from "../KebabMenu";
-import { SubjectsQuestions } from "@/types/Subjects";
+import { Answers, SubjectsQuestions } from "@/types/Subjects";
+import putAnswers from "@/services/answers/putAnswers";
+import deleteAnswers from "@/services/answers/deleteAnswers";
+import patchAnswers from "@/services/answers/patchAnswers";
 
 type FeedCardProps = {
   item: SubjectsQuestions;
@@ -18,6 +21,8 @@ type FeedCardProps = {
 export function FeedCard({ item }: FeedCardProps) {
   const storedId = JSON.parse(localStorage.getItem("personalId") || "[]");
   const [isOpen, setIsOpen] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
+  const [answer, setAnswer] = useState<Answers | null>(item.answer);
   const actionDropdownRef = useRef<HTMLDivElement>(null);
 
   const handleClickOpen = () => {
@@ -40,10 +45,37 @@ export function FeedCard({ item }: FeedCardProps) {
 
   const isOwner = Number(storedId) === item.subjectId;
 
+  const handleIsEditing = () => {
+    setIsEditing(true);
+  };
+
+  const handleDeleteAnswer = async () => {
+    try {
+      await deleteAnswers(String(item.answer.id));
+      setAnswer(null);
+      setIsOpen(false);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handleRejectAnswer = async () => {
+    try {
+      const updatedAnswer = await patchAnswers({
+        isRejected: true,
+        id: String(item.answer.id),
+      });
+      setAnswer(updatedAnswer);
+      setIsOpen(false);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <div className={styles["feed-card"]}>
       <div className={styles["feed-card__badge-wrapper"]}>
-        {item.answer !== null ? (
+        {answer !== null ? (
           <Badge mode="complete">답변 완료</Badge>
         ) : (
           <Badge>미답변</Badge>
@@ -68,9 +100,9 @@ export function FeedCard({ item }: FeedCardProps) {
                 ref={actionDropdownRef}
               >
                 <KebabMenu
-                  onEdit={() => console.log("")}
-                  onDelete={() => console.log("")}
-                  onReject={() => console.log("")}
+                  onEdit={handleIsEditing}
+                  onDelete={handleDeleteAnswer}
+                  onReject={handleRejectAnswer}
                 />
               </div>
             )}
@@ -82,8 +114,9 @@ export function FeedCard({ item }: FeedCardProps) {
 
       <FeedAnswer
         subjectId={item.subjectId}
-        answers={item.answer}
+        answers={answer}
         questionId={item.id}
+        isEditing={isEditing}
       />
 
       <div className={styles["feed-card__bottom-line"]}></div>
