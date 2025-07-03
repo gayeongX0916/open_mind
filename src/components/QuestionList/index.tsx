@@ -14,6 +14,7 @@ export default function QuestionList({
   questionCount,
   questionList,
 }: QuestionListProps) {
+  console.log(questionList);
   return (
     <div className={styles.question}>
       {questionCount === 0 ? (

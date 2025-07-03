@@ -46,14 +46,10 @@
     @include body-3;
     color: $gray-60;
   }
+}
 
-  &__button {
-    @include body-3;
-    background-color: $brown-30;
-    color: $gray-10;
-    border: none;
-    border-radius: 8px;
-    padding: 12px 24px;
-    cursor: not-allowed;
-  }
+.textarea-form {
+  display: flex;
+  flex-direction: column;
+  row-gap: 8px;
 }
