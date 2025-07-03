@@ -80,7 +80,11 @@ export function FeedCard({ item }: FeedCardProps) {
 
       <FeedQuestion question={item.content} createdAt={item.createdAt} />
 
-      <FeedAnswer subjectId={item.subjectId} answers={item.answer} />
+      <FeedAnswer
+        subjectId={item.subjectId}
+        answers={item.answer}
+        questionId={item.id}
+      />
 
       <div className={styles["feed-card__bottom-line"]}></div>
       <div className={styles["feed-card__reaction-wrapper"]}>
