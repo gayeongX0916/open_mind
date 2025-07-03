@@ -10,6 +10,7 @@ import { FeedAnswer } from "../FeedAnswer";
 import { useEffect, useRef, useState } from "react";
 import { KebabMenu } from "../KebabMenu";
 import { SubjectsQuestions } from "@/types/Subjects";
+import putAnswers from "@/services/answers/putAnswers";
 
 type FeedCardProps = {
   item: SubjectsQuestions;
@@ -18,6 +19,7 @@ type FeedCardProps = {
 export function FeedCard({ item }: FeedCardProps) {
   const storedId = JSON.parse(localStorage.getItem("personalId") || "[]");
   const [isOpen, setIsOpen] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
   const actionDropdownRef = useRef<HTMLDivElement>(null);
 
   const handleClickOpen = () => {
@@ -39,6 +41,10 @@ export function FeedCard({ item }: FeedCardProps) {
   }, []);
 
   const isOwner = Number(storedId) === item.subjectId;
+
+  const handleIsEditing = () => {
+    setIsEditing(true);
+  };
 
   return (
     <div className={styles["feed-card"]}>
@@ -68,7 +74,7 @@ export function FeedCard({ item }: FeedCardProps) {
                 ref={actionDropdownRef}
               >
                 <KebabMenu
-                  onEdit={() => console.log("")}
+                  onEdit={handleIsEditing}
                   onDelete={() => console.log("")}
                   onReject={() => console.log("")}
                 />
@@ -84,6 +90,7 @@ export function FeedCard({ item }: FeedCardProps) {
         subjectId={item.subjectId}
         answers={item.answer}
         questionId={item.id}
+        isEditing={isEditing}
       />
 
       <div className={styles["feed-card__bottom-line"]}></div>
