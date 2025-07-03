@@ -24,6 +24,8 @@ export function FeedCard({ item }: FeedCardProps) {
   const [isEditing, setIsEditing] = useState(false);
   const [answer, setAnswer] = useState<Answers | null>(item.answer);
   const actionDropdownRef = useRef<HTMLDivElement>(null);
+  const [likeCount, setLikeCount] = useState(item.like);
+  const [dislikeCount, setDislikeCount] = useState(item.dislike);
 
   const handleClickOpen = () => {
     setIsOpen((prev) => !prev);
@@ -121,8 +123,12 @@ export function FeedCard({ item }: FeedCardProps) {
 
       <div className={styles["feed-card__bottom-line"]}></div>
       <div className={styles["feed-card__reaction-wrapper"]}>
-        <Reaction mode="good" goodCount={item.like} />
-        <Reaction mode="bad" badCount={item.dislike} />
+        <Reaction mode="like" likeCount={likeCount} questionId={item.id} />
+        <Reaction
+          mode="dislike"
+          dislikeCount={dislikeCount}
+          questionId={item.id}
+        />
       </div>
     </div>
   );
