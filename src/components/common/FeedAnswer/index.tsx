@@ -63,22 +63,30 @@ export function FeedAnswer({
 
     setIsCompleted(true);
   };
-
-  const renderProfile = () => {
-    return (
-      <>
-        {imageURL && (
-          <Image
-            src={imageURL}
-            alt="프로필"
-            width={48}
-            height={48}
-            className={styles["feed-answer__profile"]}
-          />
-        )}
-      </>
-    );
-  };
+  //   return (
+  //     <div className={styles["feed-answer__content"]}>
+  //       {imageURL && (
+  //         <Image
+  //           src={imageURL}
+  //           alt="프로필"
+  //           width={48}
+  //           height={48}
+  //           className={styles["feed-answer__profile"]}
+  //         />
+  //       )}
+  //       <div className={styles["feed-answer__right-wrapper"]}>
+  //         <div className={styles["feed-answer__top-wrapper"]}>
+  //           <span className={styles["feed-answer__nickname"]}>{nickname}</span>
+  //           {isCompleted && answers && (
+  //             <span className={styles["feed-answer__createdAt"]}>
+  //               {relativeDate}
+  //             </span>
+  //           )}
+  //         </div>
+  //       </div>
+  //     </div>
+  //   );
+  // };
 
   const renderTextarea = () => {
     return (
@@ -114,10 +122,20 @@ export function FeedAnswer({
 
   const relativeDate = useRelativeDate(answers?.createdAt ?? "");
 
+  if (storedId !== subjectId && answers === null) return <></>;
+
   return (
     <div className={styles["feed-answer"]}>
       <div className={styles["feed-answer__content"]}>
-        {renderProfile()}
+        {imageURL && (
+          <Image
+            src={imageURL}
+            alt="프로필"
+            width={48}
+            height={48}
+            className={styles["feed-answer__profile"]}
+          />
+        )}
         <div className={styles["feed-answer__right-wrapper"]}>
           <div className={styles["feed-answer__top-wrapper"]}>
             <span className={styles["feed-answer__nickname"]}>{nickname}</span>

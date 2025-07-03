@@ -3,10 +3,11 @@
 @use "@/styles/_shadow.scss" as *;
 
 .feed-answer {
+  margin-bottom: 32px;
+
   &__content {
     display: flex;
     column-gap: 12px;
-    margin-bottom: 32px;
   }
 
   &__profile {
