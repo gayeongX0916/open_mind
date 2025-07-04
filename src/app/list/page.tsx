@@ -11,12 +11,15 @@ import { Pagination } from "@/components/common/Pagination";
 import { useEffect, useState } from "react";
 import { getSubjects } from "@/services/subjects/getSubjects";
 import { Subjects } from "@/types/Subjects";
+import ListModal from "@/components/Modal/ListModal";
 
 const ListPage = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [sortedList, setSortedList] = useState<Subjects[]>([]);
+  const [personalList, setPersonalList] = useState<Subjects[]>([]);
   const [sortedOption, setSortedOption] = useState("최신순");
   const [storedId, setStoredId] = useState<Number[]>([]);
+  const [showModal, setShowModal] = useState(false);
   const router = useRouter();
   const limitSize = 8;
 
@@ -24,6 +27,13 @@ const ListPage = () => {
     const stored = JSON.parse(localStorage.getItem("personalId") || "[]");
     setStoredId(stored);
   }, []);
+
+  useEffect(() => {
+    const personal = sortedList.filter((item) => {
+      return storedId.includes(item.id);
+    });
+    setPersonalList(personal);
+  }, [sortedList, storedId]);
 
   const fetchAllSubjects = async () => {
     let offset = 0;
@@ -74,8 +84,15 @@ const ListPage = () => {
     }
   };
 
+  const handleOpenModal = () => {
+    setShowModal(true);
+  };
+
   return (
     <main className={styles["list-page"]}>
+      {showModal && (
+        <ListModal personalList={personalList} onModalChange={setShowModal} />
+      )}
       <header className={styles["top-wrapper"]}>
         <button
           className={styles["logo-button"]}
@@ -89,11 +106,7 @@ const ListPage = () => {
             className={styles.logo}
           />
         </button>
-        <ArrowButton
-          mode="answer"
-          showArrow={true}
-          onClick={() => router.push("/")}
-        >
+        <ArrowButton mode="answer" showArrow={true} onClick={handleOpenModal}>
           답변하러 가기
         </ArrowButton>
       </header>
