@@ -1,0 +1,86 @@
+@use "@/styles/_color.scss" as *;
+@use "@/styles/_typography.scss" as *;
+@use "@/styles/_shadow.scss" as *;
+
+.backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+}
+
+.overlay {
+  width: 612px;
+  border-radius: 24px;
+  background-color: $gray-10;
+  box-shadow: $shadow-2;
+  padding: 30px 40px;
+
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1001;
+}
+
+.header {
+  display: flex;
+  column-gap: 5px;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.header-title {
+  @include heading-3;
+  color: $gray-60;
+}
+
+.modal-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  row-gap: 3px;
+  margin-bottom: 30px;
+}
+
+.modal-description {
+  @include body-3;
+  color: $gray-60;
+}
+
+.button-wrapper {
+  display: flex;
+  column-gap: 20px;
+  width: 100%;
+}
+
+.cancel-button,
+.delete-button {
+  @include body-3;
+  width: 100%;
+  cursor: pointer;
+  height: 46px;
+  padding: 12px 24px;
+  border-radius: 8px;
+  border: none;
+}
+
+.cancel-button {
+  background-color: $brown-10;
+
+  &:hover {
+    border: 2px solid $brown-40;
+  }
+}
+
+.delete-button {
+  background-color: $brown-40;
+  color: $gray-10;
+
+  &:hover {
+    background-color: $brown-50;
+  }
+}

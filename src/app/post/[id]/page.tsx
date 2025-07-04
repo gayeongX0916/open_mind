@@ -2,17 +2,13 @@
 
 import styles from "./page.module.scss";
 import Header from "@/components/Header";
-import messageIcon from "@/assets/message_brown_icon.svg";
-import emptyBoxIcon from "@/assets/empty_box.svg";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { SubjectsQuestions } from "@/types/Subjects";
-import Image from "next/image";
 import { FloatingButton } from "@/components/common/Button";
-import { FeedCard } from "@/components/common/FeedCard";
 import getSubjectsQuestions from "@/services/subjects/getSubjectsQuestions";
-import Modal from "@/components/common/Modal";
 import QuestionList from "@/components/QuestionList";
+import QuestionModal from "@/components/Modal/QuestionModal";
 
 const FeedDetailPage = () => {
   const { id } = useParams();
@@ -37,7 +33,7 @@ const FeedDetailPage = () => {
   return (
     <div className={styles["feed-detail-page"]}>
       {showModal && (
-        <Modal subjectId={Number(id)} onModalChange={setShowModal} />
+        <QuestionModal subjectId={Number(id)} onModalChange={setShowModal} />
       )}
       <Header subjectId={Number(id)} />
       <QuestionList questionCount={questionCount} questionList={questionList} />
