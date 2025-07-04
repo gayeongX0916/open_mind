@@ -45,7 +45,7 @@ export function FeedCard({ item }: FeedCardProps) {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  const isOwner = Number(storedId) === item.subjectId;
+  const isOwner = storedId.includes(item.subjectId) ? true : false;
 
   const handleIsEditing = () => {
     setIsEditing(true);
@@ -119,6 +119,7 @@ export function FeedCard({ item }: FeedCardProps) {
         answers={answer}
         questionId={item.id}
         isEditing={isEditing}
+        setIsEditing={setIsEditing}
       />
 
       <div className={styles["feed-card__bottom-line"]}></div>

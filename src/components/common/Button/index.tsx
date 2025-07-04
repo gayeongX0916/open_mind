@@ -12,7 +12,7 @@ import { ReactNode } from "react";
 type ArrowButtonProps = {
   mode: "question" | "answer";
   children: ReactNode;
-  onClick: () => void;
+  onClick?: () => void;
   showArrow: boolean;
   disabled?: boolean;
 };
