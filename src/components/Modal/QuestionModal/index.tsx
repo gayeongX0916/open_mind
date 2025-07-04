@@ -2,18 +2,18 @@ import styles from "./index.module.scss";
 import messageIcon from "@/assets/message_icon.svg";
 import closeIcon from "@/assets/close_icon.svg";
 import Image from "next/image";
-import { InputTextarea } from "../Input";
-import { ArrowButton } from "../Button";
 import { useEffect, useState } from "react";
 import postSubjectsQuestions from "@/services/subjects/postSubjectsQuestions";
 import getSubjectsDetails from "@/services/subjects/getSubjectsDetail";
+import { InputTextarea } from "@/components/common/Input";
+import { ArrowButton } from "@/components/common/Button";
 
-type ModalProps = {
+type QuestionModalProps = {
   subjectId: number;
   onModalChange: (close: boolean) => void;
 };
 
-export default function Modal({ subjectId, onModalChange }: ModalProps) {
+export default function QuestionModal({ subjectId, onModalChange }: QuestionModalProps) {
   const [questionInput, setQuestionInput] = useState("");
   const [imgSource, setImgSource] = useState("");
 

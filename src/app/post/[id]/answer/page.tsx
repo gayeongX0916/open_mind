@@ -4,18 +4,17 @@ import Header from "@/components/Header";
 import styles from "./page.module.scss";
 import { useParams } from "next/navigation";
 import { FloatingButton } from "@/components/common/Button";
-import messageIcon from "@/assets/message_brown_icon.svg";
-import Image from "next/image";
 import { useEffect, useState } from "react";
 import { SubjectsQuestions } from "@/types/Subjects";
-import { FeedCard } from "@/components/common/FeedCard";
 import getSubjectsQuestions from "@/services/subjects/getSubjectsQuestions";
 import QuestionList from "@/components/QuestionList";
+import DeleteModal from "@/components/Modal/DeleteModal";
 
 export default function postAnswerPage() {
   const { id } = useParams();
   const [questionCount, setQuestionCount] = useState(0);
   const [questionList, setQuestionList] = useState<SubjectsQuestions[]>([]);
+  const [showMoal, setShowModal] = useState(false);
 
   useEffect(() => {
     const fetchQuestionList = async (id: number) => {
@@ -27,12 +26,19 @@ export default function postAnswerPage() {
     fetchQuestionList(Number(id));
   }, [id]);
 
+  const handleOpenModal = () => {
+    setShowModal(true);
+  };
+
   return (
     <div className={styles["post-answer-page"]}>
+      {showMoal && (
+        <DeleteModal subjectId={String(id)} onModalChange={setShowModal} />
+      )}
       <Header subjectId={Number(id)} />
       <div className={styles.question}>
         <div className={styles["delete-floating-button"]}>
-          <FloatingButton mode="delete" onClick={() => console.log("")}>
+          <FloatingButton mode="delete" onClick={handleOpenModal}>
             삭제하기
           </FloatingButton>
         </div>
