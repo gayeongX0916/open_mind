@@ -27,15 +27,11 @@
 }
 
 .header {
-  display: flex;
-  column-gap: 5px;
-  align-items: center;
-  margin-bottom: 20px;
-}
-
-.header-title {
-  @include heading-3;
+  @include heading-2;
   color: $gray-60;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
 }
 
 .modal-body {

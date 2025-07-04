@@ -4,7 +4,7 @@ export default async function deleteSubjects(data: {
 }) {
   try {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_API_BASE_URL}/subjects/${data.id}`,
+      `${process.env.NEXT_PUBLIC_API_BASE_URL}/subjects/${data.id}/`,
       {
         method: "DELETE",
         headers: { "Content-type": "application/json" },

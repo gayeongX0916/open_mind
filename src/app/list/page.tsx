@@ -16,9 +16,14 @@ const ListPage = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [sortedList, setSortedList] = useState<Subjects[]>([]);
   const [sortedOption, setSortedOption] = useState("최신순");
+  const [storedId, setStoredId] = useState<Number[]>([]);
   const router = useRouter();
   const limitSize = 8;
-  const storedId = JSON.parse(localStorage.getItem("personalId") || "[]");
+
+  useEffect(() => {
+    const stored = JSON.parse(localStorage.getItem("personalId") || "[]");
+    setStoredId(stored);
+  }, []);
 
   const fetchAllSubjects = async () => {
     let offset = 0;
@@ -62,7 +67,7 @@ const ListPage = () => {
   );
 
   const handlePageChange = (id: number) => {
-    if (id === storedId) {
+    if (storedId.includes(id)) {
       router.push(`/post/${id}/answer`);
     } else {
       router.push(`/post/${id}`);
