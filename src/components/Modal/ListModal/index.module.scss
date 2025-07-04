@@ -1,0 +1,61 @@
+@use "@/styles/_color.scss" as *;
+@use "@/styles/_typography.scss" as *;
+@use "@/styles/_shadow.scss" as *;
+
+.backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+}
+
+.overlay {
+  border-radius: 24px;
+  background-color: $brown-10;
+  box-shadow: $shadow-2;
+  padding: 20px;
+
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1001;
+}
+
+.close-button {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.list-modal-item {
+  border-radius: 130px;
+  display: flex;
+  column-gap: 15px;
+  border: 1px solid $gray-40;
+  width: 330px;
+  margin-top: 20px;
+}
+
+.profile {
+  border-radius: 90%;
+  object-fit: cover;
+}
+
+.right-wrapper {
+  display: flex;
+  flex-direction: column;
+  row-gap: 10px;
+  align-items: flex-start;
+  margin-top: 5px;
+}
+
+.nickname {
+  @include caption-1($font-weight-bold);
+}
+
+.questionCount {
+  @include caption-1;
+}
