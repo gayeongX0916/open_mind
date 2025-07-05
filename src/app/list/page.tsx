@@ -3,12 +3,12 @@
 import Image from "next/image";
 import styles from "./page.module.scss";
 import smallLogo from "@/assets/small_logo.svg";
-import { ArrowButton } from "@/components/common/Button";
+import ArrowButton from "@/components/common/Button";
 import { useRouter } from "next/navigation";
 import { Dropdown } from "@/components/common/Dropdown";
 import { UserCard } from "@/components/common/UserCard";
 import { Pagination } from "@/components/common/Pagination";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { getSubjects } from "@/services/subjects/getSubjects";
 import { Subjects } from "@/types/Subjects";
 import ListModal from "@/components/Modal/ListModal";
@@ -21,7 +21,26 @@ const ListPage = () => {
   const [storedId, setStoredId] = useState<Number[]>([]);
   const [showModal, setShowModal] = useState(false);
   const router = useRouter();
-  const limitSize = 8;
+  const [limitSize, setLimitSize] = useState(8);
+  const wrapperRef = useRef<HTMLUListElement | null>(null);
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (!wrapperRef.current) return;
+
+      const wrapperWidth = wrapperRef.current.offsetWidth;
+      const gap = 20;
+      const cardMinWidth = 186;
+      const cardCount = Math.floor((wrapperWidth + gap) / (cardMinWidth + gap));
+
+      const adjustedCardCount = Math.max(3, Math.min(cardCount, 4));
+      setLimitSize(adjustedCardCount * 2);
+    };
+
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   useEffect(() => {
     const stored = JSON.parse(localStorage.getItem("personalId") || "[]");
@@ -110,6 +129,7 @@ const ListPage = () => {
           답변하러 가기
         </ArrowButton>
       </header>
+      <div className={styles['dropdown-wrapper']}>
       <h1 className={styles.title}>누구에게 질문할까요?</h1>
       <div className={styles.dropdown}>
         <Dropdown
@@ -117,7 +137,8 @@ const ListPage = () => {
           setSortedOption={setSortedOption}
         />
       </div>
-      <ul className={styles["user-card-wrapper"]}>
+      </div>
+      <ul ref={wrapperRef} className={styles["user-card-wrapper"]}>
         {paginatedList.map(({ id, imageSource, name, questionCount }) => (
           <li key={id}>
             <button

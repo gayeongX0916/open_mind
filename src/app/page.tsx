@@ -4,10 +4,10 @@ import Image from "next/image";
 import styles from "./page.module.scss";
 import logo from "@/assets/logo.svg";
 import mainCharacter from "@/assets/main_background.svg";
-import { ArrowButton } from "@/components/common/Button";
+import ArrowButton from "@/components/common/Button";
 import { useRouter } from "next/navigation";
 import { InputField } from "@/components/common/Input";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { postSubjects } from "@/services/subjects/postSubjects";
 
 const Home = () => {
@@ -25,14 +25,14 @@ const Home = () => {
     router.push(`/post/${id}/answer`);
   };
 
+  const handleGotoList = useCallback(() => {
+    router.push("/list");
+  }, []);
+
   return (
     <main className={styles["home-page"]}>
       <div className={styles["button-wrapper"]}>
-        <ArrowButton
-          mode="answer"
-          showArrow={true}
-          onClick={() => router.push("/list")}
-        >
+        <ArrowButton mode="answer" showArrow={true} onClick={handleGotoList}>
           질문하러 가기
         </ArrowButton>
       </div>
@@ -49,7 +49,13 @@ const Home = () => {
         </ArrowButton>
       </form>
       <div className={styles["main-character"]}>
-        <Image src={mainCharacter} alt="메인 캐릭터" />
+        <Image
+          src={mainCharacter}
+          alt="메인 캐릭터"
+          className={styles["main-character-img"]}
+          width={1200}
+          height={627}
+        />
       </div>
     </main>
   );

@@ -4,7 +4,7 @@ import Image from "next/image";
 import styles from "./index.module.scss";
 import { InputTextarea } from "../Input";
 import { useEffect, useState } from "react";
-import { ArrowButton } from "../Button";
+import ArrowButton from "../Button";
 import getSubjectsDetails from "@/services/subjects/getSubjectsDetail";
 import { Answers } from "@/types/Subjects";
 import { useRelativeDate } from "@/hooks/useRelativeDate";
@@ -16,6 +16,7 @@ type FeedAnswerProps = {
   questionId: number;
   answers: Answers | null;
   isEditing: boolean;
+  setIsEditing: (edit: boolean) => void;
 };
 
 export function FeedAnswer({
@@ -23,21 +24,27 @@ export function FeedAnswer({
   answers,
   questionId,
   isEditing,
+  setIsEditing,
 }: FeedAnswerProps) {
   const storedId = JSON.parse(localStorage.getItem("personalId") || "[]");
   const [isCompleted, setIsCompleted] = useState(false);
   const [imageURL, setImageURL] = useState("");
   const [nickname, setNickname] = useState("");
   const [value, setValue] = useState(answers?.content || "");
+  const [answerData, setAnswerData] = useState<Answers | null>(answers);
 
   useEffect(() => {
-    if (answers) {
+    setAnswerData(answers);
+  }, [answers]);
+
+  useEffect(() => {
+    if (answerData) {
       setIsCompleted(true);
     } else {
       setIsCompleted(false);
       setValue("");
     }
-  }, [answers]);
+  }, [answerData]);
 
   useEffect(() => {
     const fetchDetailSubjects = async (id: number) => {
@@ -59,7 +66,20 @@ export function FeedAnswer({
       id: String(answers!.id),
     };
     try {
-      await putAnswers(payload);
+      const updatedContent = await putAnswers(payload);
+
+      if (updatedContent) {
+        setAnswerData((prev) =>
+          prev
+            ? {
+                ...prev,
+                content: updatedContent,
+                isRejected: false,
+              }
+            : null
+        );
+      }
+      setIsEditing(false);
     } catch (error) {
       console.error(error);
     }
@@ -78,60 +98,55 @@ export function FeedAnswer({
     };
 
     try {
-      await postQuestionAnswers(payload);
+      const newAnswer = await postQuestionAnswers(payload);
+      if (newAnswer) {
+        setAnswerData(newAnswer);
+        setIsCompleted(true);
+        setIsEditing(false);
+      }
     } catch (error) {
       console.error(error);
     }
 
     setIsCompleted(true);
   };
-  
+
   const renderTextarea = () => {
     return (
-      <form className={styles["textarea-form"]}>
+      <div className={styles["textarea-form"]}>
         <InputTextarea
           value={value}
           onChange={(e) => setValue(e.target.value)}
           placeholder="답변을 입력해주세요"
         />
-        {isEditing ? (
-          <ArrowButton
-            mode="question"
-            showArrow={false}
-            onClick={handleEditAnswer}
-            disabled={value ? false : true}
-          >
-            수정 완료
-          </ArrowButton>
-        ) : (
-          <ArrowButton
-            mode="question"
-            showArrow={false}
-            onClick={postAnswerForm}
-            disabled={value ? false : true}
-          >
-            답변 완료
-          </ArrowButton>
-        )}
-      </form>
+        <ArrowButton
+          mode="question"
+          showArrow={false}
+          disabled={!value}
+          onClick={isEditing ? handleEditAnswer : postAnswerForm}
+        >
+          {isEditing ? "수정 완료" : "답변 완료"}
+        </ArrowButton>
+      </div>
     );
   };
 
   const renderAnswerContent = () => {
-    if (!answers) return null;
+    if (!answerData) return null;
 
-    return answers.isRejected ? (
+    return answerData.isRejected ? (
       <span className={styles["feed-answer__rejected-answer"]}>답변 거절</span>
     ) : (
       <span className={styles["feed-answer__complete-answer"]}>
-        {answers.content}
+        {answerData.content}
       </span>
     );
   };
 
-  const relativeDate = useRelativeDate(answers?.createdAt ?? "");
+  const relativeDate = useRelativeDate(answerData?.createdAt ?? "");
+  const isOwner = storedId.includes(subjectId);
 
-  if (storedId !== subjectId && answers === null) return <></>;
+  if (!isOwner && answerData === null) return <></>;
 
   return (
     <div className={styles["feed-answer"]}>
@@ -148,13 +163,13 @@ export function FeedAnswer({
         <div className={styles["feed-answer__right-wrapper"]}>
           <div className={styles["feed-answer__top-wrapper"]}>
             <span className={styles["feed-answer__nickname"]}>{nickname}</span>
-            {isCompleted && answers && (
+            {isCompleted && answerData && (
               <span className={styles["feed-answer__createdAt"]}>
                 {relativeDate}
               </span>
             )}
           </div>
-          {storedId === subjectId ? (
+          {isOwner ? (
             <>
               {!isCompleted || isEditing
                 ? renderTextarea()

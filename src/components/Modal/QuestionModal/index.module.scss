@@ -1,6 +1,7 @@
 @use "@/styles/_color.scss" as *;
 @use "@/styles/_typography.scss" as *;
 @use "@/styles/_shadow.scss" as *;
+@use "@/styles/_media.scss" as *;
 
 .backdrop {
   position: fixed;
@@ -24,6 +25,11 @@
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 1001;
+
+  @include mobile {
+    padding: 24px;
+    width: calc(100% - 24px);
+  }
 }
 
 .header {
@@ -40,6 +46,10 @@
 .header-question {
   @include heading-3;
   color: $gray-60;
+
+  @include mobile {
+    @include body-1;
+  }
 }
 
 .close-button {
@@ -50,6 +60,11 @@
 
 .close-icon {
   display: block;
+
+  @include mobile {
+    width: 24px;
+    height: 24px;
+  }
 }
 
 .title-wrapper {

@@ -10,7 +10,6 @@ import { FeedAnswer } from "../FeedAnswer";
 import { useEffect, useRef, useState } from "react";
 import { KebabMenu } from "../KebabMenu";
 import { Answers, SubjectsQuestions } from "@/types/Subjects";
-import putAnswers from "@/services/answers/putAnswers";
 import deleteAnswers from "@/services/answers/deleteAnswers";
 import patchAnswers from "@/services/answers/patchAnswers";
 
@@ -45,10 +44,11 @@ export function FeedCard({ item }: FeedCardProps) {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  const isOwner = Number(storedId) === item.subjectId;
+  const isOwner = storedId.includes(item.subjectId) ? true : false;
 
   const handleIsEditing = () => {
     setIsEditing(true);
+    setIsOpen(false);
   };
 
   const handleDeleteAnswer = async () => {
@@ -119,6 +119,7 @@ export function FeedCard({ item }: FeedCardProps) {
         answers={answer}
         questionId={item.id}
         isEditing={isEditing}
+        setIsEditing={setIsEditing}
       />
 
       <div className={styles["feed-card__bottom-line"]}></div>

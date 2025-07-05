@@ -31,6 +31,9 @@ export default async function postQuestionAnswers({
     if (!res.ok) {
       throw new Error("답변 생성에 실패했습니다.");
     }
+
+    const answers = await res.json();
+    return answers;
   } catch (error) {
     console.error(error);
   }

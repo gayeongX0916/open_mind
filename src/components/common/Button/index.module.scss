@@ -1,8 +1,10 @@
 @use "@/styles/_color.scss" as *;
 @use "@/styles/_typography.scss" as *;
 @use "@/styles/_shadow.scss" as *;
+@use "@/styles/_media.scss" as *;
 
 .arrow-button {
+  @include body-3;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -11,6 +13,11 @@
   border-radius: 8px;
   height: 46px;
   cursor: pointer;
+
+  @include mobile {
+    @include caption-1;
+    padding: 8px 12px;
+  }
 }
 
 .question-button {
