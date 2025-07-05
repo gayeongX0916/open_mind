@@ -1,15 +1,24 @@
 @use "@/styles/_color.scss" as *;
 @use "@/styles/_typography.scss" as *;
 @use "@/styles/_shadow.scss" as *;
+@use "@/styles/_media.scss" as *;
 
-.question{
-   padding: 16px 24px;
+.question {
+  padding: 16px 24px;
   border-radius: 16px;
   background-color: $brown-10;
   border: 1px solid $brown-20;
   margin: 0 auto;
   margin-top: 20px;
   width: 716px;
+
+  @include tablet {
+    width: 100%;
+  }
+
+  @include mobile {
+    width: 100%;
+  }
 }
 
 .question-empty {

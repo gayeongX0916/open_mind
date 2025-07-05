@@ -1,9 +1,18 @@
 @use "@/styles/_color.scss" as *;
 @use "@/styles/_typography.scss" as *;
 @use "@/styles/_shadow.scss" as *;
+@use "@/styles/_media.scss" as *;
 
 .feed-detail-page {
   padding-bottom: 24px;
+
+  @include tablet {
+    margin: 0 32px;
+  }
+
+  @include mobile {
+    margin: 0 24px;
+  }
 }
 
 .floating-button {
@@ -11,4 +20,8 @@
   display: flex;
   justify-content: flex-end;
   padding-right: 24px;
+
+  @include mobile-tablet {
+    padding-right: 0;
+  }
 }
