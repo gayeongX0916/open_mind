@@ -4,7 +4,7 @@ import Image from "next/image";
 import styles from "./index.module.scss";
 import { InputTextarea } from "../Input";
 import { useEffect, useState } from "react";
-import { ArrowButton } from "../Button";
+import ArrowButton from "../Button";
 import getSubjectsDetails from "@/services/subjects/getSubjectsDetail";
 import { Answers } from "@/types/Subjects";
 import { useRelativeDate } from "@/hooks/useRelativeDate";

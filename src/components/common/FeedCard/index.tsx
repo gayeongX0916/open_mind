@@ -10,7 +10,6 @@ import { FeedAnswer } from "../FeedAnswer";
 import { useEffect, useRef, useState } from "react";
 import { KebabMenu } from "../KebabMenu";
 import { Answers, SubjectsQuestions } from "@/types/Subjects";
-import putAnswers from "@/services/answers/putAnswers";
 import deleteAnswers from "@/services/answers/deleteAnswers";
 import patchAnswers from "@/services/answers/patchAnswers";
 
@@ -49,6 +48,7 @@ export function FeedCard({ item }: FeedCardProps) {
 
   const handleIsEditing = () => {
     setIsEditing(true);
+    setIsOpen(false);
   };
 
   const handleDeleteAnswer = async () => {

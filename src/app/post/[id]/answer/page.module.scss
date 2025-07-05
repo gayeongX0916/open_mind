@@ -1,14 +1,27 @@
 @use "@/styles/_color.scss" as *;
 @use "@/styles/_typography.scss" as *;
 @use "@/styles/_shadow.scss" as *;
+@use "@/styles/_media.scss" as *;
 
 .post-answer-page {
   padding-bottom: 140px;
+
+  @include tablet {
+    margin: 0 32px;
+  }
+
+  @include mobile {
+    margin: 0 24px;
+  }
 }
 
 .question {
   width: 716px;
   margin: 0 auto;
+
+  @include mobile-tablet {
+    width: 100%;
+  }
 }
 
 .delete-floating-button {
