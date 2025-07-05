@@ -3,7 +3,7 @@
 import Image from "next/image";
 import styles from "./page.module.scss";
 import smallLogo from "@/assets/small_logo.svg";
-import { ArrowButton } from "@/components/common/Button";
+import ArrowButton from "@/components/common/Button";
 import { useRouter } from "next/navigation";
 import { Dropdown } from "@/components/common/Dropdown";
 import { UserCard } from "@/components/common/UserCard";
