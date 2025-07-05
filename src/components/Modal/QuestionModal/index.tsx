@@ -13,7 +13,10 @@ type QuestionModalProps = {
   onModalChange: (close: boolean) => void;
 };
 
-export default function QuestionModal({ subjectId, onModalChange }: QuestionModalProps) {
+export default function QuestionModal({
+  subjectId,
+  onModalChange,
+}: QuestionModalProps) {
   const [questionInput, setQuestionInput] = useState("");
   const [imgSource, setImgSource] = useState("");
 
@@ -59,7 +62,12 @@ export default function QuestionModal({ subjectId, onModalChange }: QuestionModa
       <div className={styles.overlay}>
         <header className={styles.header}>
           <div className={styles["header-left-wrapper"]}>
-            <Image src={messageIcon} alt="메세지" width={28} height={28} />
+            <Image
+              src={messageIcon}
+              alt="메세지"
+              width={28}
+              height={28}
+            />
             <span className={styles["header-question"]}>질문을 작성하세요</span>
           </div>
           <button className={styles["close-button"]} onClick={handleCloseModal}>
