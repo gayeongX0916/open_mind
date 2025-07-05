@@ -7,12 +7,12 @@ import arrowRightBrown from "@/assets/arrow_right2_brown.svg";
 import linkIcon from "@/assets/link_white_icon.svg";
 import kakaoIcon from "@/assets/kakaotalk_icon.svg";
 import facebookIcon from "@/assets/facebook_white_icon.svg";
-import { ReactNode } from "react";
+import React, { ReactNode } from "react";
 
 type ArrowButtonProps = {
   mode: "question" | "answer";
   children: ReactNode;
-  onClick: () => void;
+  onClick?: () => void;
   showArrow: boolean;
   disabled?: boolean;
 };
@@ -28,7 +28,7 @@ type ShareButtonProps = {
   onClick: () => void;
 };
 
-export function ArrowButton({
+function ArrowButton({
   mode,
   children,
   onClick,
@@ -113,3 +113,5 @@ export function ShareButton({ mode, onClick }: ShareButtonProps) {
     </>
   );
 }
+
+export default React.memo(ArrowButton);

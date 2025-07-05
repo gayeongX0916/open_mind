@@ -1,0 +1,30 @@
+@use "@/styles/_color.scss" as *;
+@use "@/styles/_typography.scss" as *;
+@use "@/styles/_shadow.scss" as *;
+
+.feed-card {
+  background: $gray-10;
+  border-radius: 16px;
+  padding: 32px;
+  margin-bottom: 20px;
+  animation: shimmer 1.5s infinite linear;
+}
+
+.badge,
+.question,
+.answer {
+  height: 20px;
+  margin-bottom: 12px;
+  background: linear-gradient(90deg, #f0f0f0 25%, #e2e2e2 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  border-radius: 6px;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
