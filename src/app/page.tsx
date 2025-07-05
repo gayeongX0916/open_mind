@@ -49,7 +49,13 @@ const Home = () => {
         </ArrowButton>
       </form>
       <div className={styles["main-character"]}>
-        <Image src={mainCharacter} alt="메인 캐릭터" />
+        <Image
+          src={mainCharacter}
+          alt="메인 캐릭터"
+          className={styles["main-character-img"]}
+          width={1200}
+          height={627}
+        />
       </div>
     </main>
   );
