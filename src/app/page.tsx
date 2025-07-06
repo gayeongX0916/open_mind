@@ -27,7 +27,7 @@ const Home = () => {
 
   const handleGotoList = useCallback(() => {
     router.push("/list");
-  }, []);
+  }, [router]);
 
   return (
     <main className={styles["home-page"]}>
@@ -44,7 +44,7 @@ const Home = () => {
           value={nameInput}
           onChange={(e) => setNameInput(e.target.value)}
         />
-        <ArrowButton mode="question" showArrow={false} onClick={() => {}}>
+        <ArrowButton mode="question" showArrow={false}>
           질문 받기
         </ArrowButton>
       </form>
