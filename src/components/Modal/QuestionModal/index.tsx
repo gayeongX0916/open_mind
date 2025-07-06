@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import postSubjectsQuestions from "@/services/subjects/postSubjectsQuestions";
 import getSubjectsDetails from "@/services/subjects/getSubjectsDetail";
 import { InputTextarea } from "@/components/common/Input";
-import { ArrowButton } from "@/components/common/Button";
+import ArrowButton from "@/components/common/Button";
 
 type QuestionModalProps = {
   subjectId: number;
@@ -62,12 +62,7 @@ export default function QuestionModal({
       <div className={styles.overlay}>
         <header className={styles.header}>
           <div className={styles["header-left-wrapper"]}>
-            <Image
-              src={messageIcon}
-              alt="메세지"
-              width={28}
-              height={28}
-            />
+            <Image src={messageIcon} alt="메세지" width={28} height={28} />
             <span className={styles["header-question"]}>질문을 작성하세요</span>
           </div>
           <button className={styles["close-button"]} onClick={handleCloseModal}>
