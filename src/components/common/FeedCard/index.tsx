@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { Badge } from "../Badge";
+import Badge from "../Badge";
 import moreIcon from "@/assets/more_icon.svg";
 import styles from "./index.module.scss";
 import { FeedQuestion } from "../FeedQuestion";
@@ -18,13 +18,13 @@ type FeedCardProps = {
 };
 
 export function FeedCard({ item }: FeedCardProps) {
-  const storedId = JSON.parse(localStorage.getItem("personalId") || "[]");
   const [isOpen, setIsOpen] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [answer, setAnswer] = useState<Answers | null>(item.answer);
   const actionDropdownRef = useRef<HTMLDivElement>(null);
   const [likeCount, setLikeCount] = useState(item.like);
   const [dislikeCount, setDislikeCount] = useState(item.dislike);
+  const [isOwner, setIsOwner] = useState(false);
 
   const handleClickOpen = () => {
     setIsOpen((prev) => !prev);
@@ -40,11 +40,14 @@ export function FeedCard({ item }: FeedCardProps) {
   };
 
   useEffect(() => {
+    const storedId = JSON.parse(localStorage.getItem("personalId") || "[]");
+    setIsOwner(storedId.includes(item.subjectId));
+  }, [item.subjectId]);
+
+  useEffect(() => {
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
-
-  const isOwner = storedId.includes(item.subjectId) ? true : false;
 
   const handleIsEditing = () => {
     setIsEditing(true);

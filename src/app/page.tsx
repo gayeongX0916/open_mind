@@ -7,7 +7,7 @@ import mainCharacter from "@/assets/main_background.svg";
 import ArrowButton from "@/components/common/Button";
 import { useRouter } from "next/navigation";
 import { InputField } from "@/components/common/Input";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { postSubjects } from "@/services/subjects/postSubjects";
 
 const Home = () => {
@@ -27,6 +27,10 @@ const Home = () => {
 
   const handleGotoList = useCallback(() => {
     router.push("/list");
+  }, [router]);
+
+  useEffect(() => {
+    router.prefetch("/list");
   }, [router]);
 
   return (
