@@ -1,13 +1,13 @@
 "use client";
 
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { getSubjects } from "@/services/subjects/getSubjects";
 import { Subjects } from "@/types/Subjects";
 import ArrowButton from "@/components/common/Button";
-import { Dropdown } from "@/components/common/Dropdown";
-import { UserCard } from "@/components/common/UserCard";
-import { Pagination } from "@/components/common/Pagination";
+import Dropdown from "@/components/common/Dropdown";
+import UserCard from "@/components/common/UserCard";
+import Pagination from "@/components/common/Pagination";
 import ListModal from "@/components/Modal/ListModal";
 import styles from "./index.module.scss";
 import Image from "next/image";
@@ -104,14 +104,15 @@ export default function ListClientPage({
     }
   };
 
-  const handleOpenModal = () => setShowModal(true);
+  const handleOpenModal = useCallback(() => {
+    setShowModal(true);
+  }, []);
 
   return (
     <main className={styles["list-page"]}>
       {showModal && (
         <ListModal personalList={personalList} onModalChange={setShowModal} />
       )}
-
       <header className={styles["top-wrapper"]}>
         <button
           className={styles["logo-button"]}
@@ -123,7 +124,6 @@ export default function ListClientPage({
           답변하러 가기
         </ArrowButton>
       </header>
-
       <div className={styles["dropdown-wrapper"]}>
         <h1 className={styles.title}>누구에게 질문할까요?</h1>
         <div className={styles.dropdown}>
@@ -133,7 +133,6 @@ export default function ListClientPage({
           />
         </div>
       </div>
-
       <ul ref={wrapperRef} className={styles["user-card-wrapper"]}>
         {paginatedList.map(({ id, imageSource, name, questionCount }) => (
           <li key={id}>
@@ -150,7 +149,6 @@ export default function ListClientPage({
           </li>
         ))}
       </ul>
-
       <nav className={styles.pagination}>
         <Pagination
           pageSize={limitSize}

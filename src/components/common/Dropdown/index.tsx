@@ -4,14 +4,15 @@ import Image from "next/image";
 import styles from "./index.module.scss";
 import arrowDownGray from "@/assets/arrow_down_gray.svg";
 import arrowUp from "@/assets/arrow_up.svg";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
+import React from "react";
 
 type DropdownProps = {
   sortedOption: string;
   setSortedOption: (valie: string) => void;
 };
 
-export function Dropdown({sortedOption,setSortedOption}:DropdownProps) {
+function Dropdown({ sortedOption, setSortedOption }: DropdownProps) {
   const [isOpen, setIsOpen] = useState(false);
   const sortDropdownRef = useRef<HTMLDivElement>(null);
 
@@ -64,3 +65,5 @@ export function Dropdown({sortedOption,setSortedOption}:DropdownProps) {
     </div>
   );
 }
+
+export default React.memo(Dropdown);
