@@ -3,6 +3,7 @@ import arrowLeft from "@/assets/arrow_left.svg";
 import arrowRight from "@/assets/arrow_right.svg";
 import { getSubjects } from "@/services/subjects/getSubjects";
 import Image from "next/image";
+import React from "react";
 import { useEffect, useState } from "react";
 
 type PaginationProps = {
@@ -11,11 +12,7 @@ type PaginationProps = {
   onPageChage: (page: number) => void;
 };
 
-export function Pagination({
-  pageSize,
-  currentPage,
-  onPageChage,
-}: PaginationProps) {
+function Pagination({ pageSize, currentPage, onPageChage }: PaginationProps) {
   const [totalPage, setTotalPage] = useState(0);
 
   useEffect(() => {
@@ -80,3 +77,5 @@ export function Pagination({
     </div>
   );
 }
+
+export default React.memo(Pagination);

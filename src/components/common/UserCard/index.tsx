@@ -1,6 +1,7 @@
 import Image from "next/image";
 import messageGrayIcon from "@/assets/message_gray_icon.svg";
 import styles from "./index.module.scss";
+import React from "react";
 
 type UserCardProps = {
   img: string;
@@ -8,11 +9,17 @@ type UserCardProps = {
   question: number;
 };
 
-export function UserCard({ img, nickname, question }: UserCardProps) {
+function UserCard({ img, nickname, question }: UserCardProps) {
   return (
     <div className={styles["user-card"]}>
       <div className={styles["user-card__profile"]}>
-        <Image alt="사용자 이미지" src={img} width={60} height={60} className={styles["user-card__avatar"]} />
+        <Image
+          alt="사용자 이미지"
+          src={img}
+          width={60}
+          height={60}
+          className={styles["user-card__avatar"]}
+        />
         <span className={styles["user-card__nickname"]}>{nickname}</span>
       </div>
       <div className={styles["user-card__bottom-wrapper"]}>
@@ -27,3 +34,5 @@ export function UserCard({ img, nickname, question }: UserCardProps) {
     </div>
   );
 }
+
+export default React.memo(UserCard);
