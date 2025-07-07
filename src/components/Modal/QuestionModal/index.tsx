@@ -1,26 +1,26 @@
+"use client";
+
 import styles from "./index.module.scss";
 import messageIcon from "@/assets/message_icon.svg";
 import closeIcon from "@/assets/close_icon.svg";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import postSubjectsQuestions from "@/services/subjects/postSubjectsQuestions";
 import getSubjectsDetails from "@/services/subjects/getSubjectsDetail";
 import { InputTextarea } from "@/components/common/Input";
-import ArrowButton from "@/components/common/Button";
+import { ArrowButton } from "@/components/common/Button";
+import React from "react";
 
 type QuestionModalProps = {
   subjectId: number;
   onModalChange: (close: boolean) => void;
 };
 
-export default function QuestionModal({
-  subjectId,
-  onModalChange,
-}: QuestionModalProps) {
+function QuestionModal({ subjectId, onModalChange }: QuestionModalProps) {
   const [questionInput, setQuestionInput] = useState("");
   const [imgSource, setImgSource] = useState("");
 
-  const handleonClickQuestion = async () => {
+  const handleOnClickQuestion = useCallback(async () => {
     const payload = {
       data: {
         subjectId,
@@ -42,7 +42,7 @@ export default function QuestionModal({
     } catch (error) {
       console.error(error);
     }
-  };
+  }, [subjectId, questionInput]);
 
   useEffect(() => {
     const fetchSubjectsImg = async (id: number) => {
@@ -88,6 +88,7 @@ export default function QuestionModal({
           )}
           <span className={styles.nickname}>닉네임</span>
         </div>
+
         <form className={styles["modal-form"]}>
           <InputTextarea
             value={questionInput}
@@ -96,9 +97,9 @@ export default function QuestionModal({
           ></InputTextarea>
           <ArrowButton
             mode="question"
-            onClick={handleonClickQuestion}
+            onClick={handleOnClickQuestion}
             showArrow={false}
-            disabled={questionInput ? false : true}
+            disabled={!questionInput}
           >
             질문 보내기
           </ArrowButton>
@@ -107,3 +108,5 @@ export default function QuestionModal({
     </>
   );
 }
+
+export default React.memo(QuestionModal);
