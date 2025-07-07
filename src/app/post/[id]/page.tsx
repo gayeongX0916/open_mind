@@ -3,7 +3,7 @@
 import styles from "./page.module.scss";
 import Header from "@/components/Header";
 import { useParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { SubjectsQuestions } from "@/types/Subjects";
 import { FloatingButton } from "@/components/common/Button";
 import getSubjectsQuestions from "@/services/subjects/getSubjectsQuestions";
@@ -26,9 +26,9 @@ const FeedDetailPage = () => {
     fetchQuestionList(Number(id));
   }, [id]);
 
-  const handleOpenModal = () => {
+  const handleOpenModal = useCallback(() => {
     setShowModal(true);
-  };
+  }, []);
 
   return (
     <div className={styles["feed-detail-page"]}>

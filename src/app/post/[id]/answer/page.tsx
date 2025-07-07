@@ -4,7 +4,7 @@ import Header from "@/components/Header";
 import styles from "./page.module.scss";
 import { useParams } from "next/navigation";
 import { FloatingButton } from "@/components/common/Button";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { SubjectsQuestions } from "@/types/Subjects";
 import getSubjectsQuestions from "@/services/subjects/getSubjectsQuestions";
 import QuestionList from "@/components/QuestionList";
@@ -14,7 +14,7 @@ export default function postAnswerPage() {
   const { id } = useParams();
   const [questionCount, setQuestionCount] = useState(0);
   const [questionList, setQuestionList] = useState<SubjectsQuestions[]>([]);
-  const [showMoal, setShowModal] = useState(false);
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     const fetchQuestionList = async (id: number) => {
@@ -26,13 +26,13 @@ export default function postAnswerPage() {
     fetchQuestionList(Number(id));
   }, [id]);
 
-  const handleOpenModal = () => {
+  const handleOpenModal = useCallback(() => {
     setShowModal(true);
-  };
+  }, []);
 
   return (
     <div className={styles["post-answer-page"]}>
-      {showMoal && (
+      {showModal && (
         <DeleteModal subjectId={String(id)} onModalChange={setShowModal} />
       )}
       <Header subjectId={Number(id)} />
