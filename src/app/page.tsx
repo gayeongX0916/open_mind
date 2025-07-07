@@ -4,7 +4,7 @@ import Image from "next/image";
 import styles from "./page.module.scss";
 import logo from "@/assets/logo.svg";
 import mainCharacter from "@/assets/main_background.svg";
-import ArrowButton from "@/components/common/Button";
+import { ArrowButton } from "@/components/common/Button";
 import { useRouter } from "next/navigation";
 import { InputField } from "@/components/common/Input";
 import { useCallback, useEffect, useState } from "react";
