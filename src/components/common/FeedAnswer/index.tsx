@@ -3,30 +3,29 @@
 import Image from "next/image";
 import styles from "./index.module.scss";
 import { InputTextarea } from "../Input";
-import { useEffect, useState } from "react";
-import ArrowButton from "../Button";
+import { useCallback, useEffect, useState } from "react";
+import { ArrowButton } from "../Button";
 import getSubjectsDetails from "@/services/subjects/getSubjectsDetail";
 import { Answers } from "@/types/Subjects";
 import { useRelativeDate } from "@/hooks/useRelativeDate";
 import postQuestionAnswers from "@/services/questions/postQuestionAnswers";
 import putAnswers from "@/services/answers/putAnswers";
+import React from "react";
 
 type FeedAnswerProps = {
   subjectId: number;
-  questionId: number;
   answers: Answers | null;
   isEditing: boolean;
   setIsEditing: (edit: boolean) => void;
 };
 
-export function FeedAnswer({
+function FeedAnswer({
   subjectId,
   answers,
-  questionId,
   isEditing,
   setIsEditing,
 }: FeedAnswerProps) {
-  const storedId = JSON.parse(localStorage.getItem("personalId") || "[]");
+  const [isOwner, setIsOwner] = useState(false);
   const [isCompleted, setIsCompleted] = useState(false);
   const [imageURL, setImageURL] = useState("");
   const [nickname, setNickname] = useState("");
@@ -56,7 +55,12 @@ export function FeedAnswer({
     fetchDetailSubjects(Number(subjectId));
   }, [subjectId]);
 
-  const handleEditAnswer = async () => {
+  useEffect(() => {
+    const storedId = JSON.parse(localStorage.getItem("personalId") || "[]");
+    setIsOwner(storedId.includes(subjectId));
+  }, [subjectId]);
+
+  const handleEditAnswer = useCallback(async () => {
     const payload = {
       data: {
         content: value,
@@ -83,33 +87,36 @@ export function FeedAnswer({
     } catch (error) {
       console.error(error);
     }
-  };
+  }, []);
 
-  const postAnswerForm = async () => {
+  const postAnswerForm = useCallback(async () => {
     const payload = {
       data: {
-        questionId,
         content: value,
         isRejected: false,
-        team: "1-50",
       },
       team: "1-50",
-      question_id: String(questionId),
+      id: String(answers!.id),
     };
-
     try {
-      const newAnswer = await postQuestionAnswers(payload);
-      if (newAnswer) {
-        setAnswerData(newAnswer);
-        setIsCompleted(true);
-        setIsEditing(false);
+      const updatedContent = await putAnswers(payload);
+
+      if (updatedContent) {
+        setAnswerData((prev) =>
+          prev
+            ? {
+                ...prev,
+                content: updatedContent,
+                isRejected: false,
+              }
+            : null
+        );
       }
+      setIsEditing(false);
     } catch (error) {
       console.error(error);
     }
-
-    setIsCompleted(true);
-  };
+  }, []);
 
   const renderTextarea = () => {
     return (
@@ -144,7 +151,6 @@ export function FeedAnswer({
   };
 
   const relativeDate = useRelativeDate(answerData?.createdAt ?? "");
-  const isOwner = storedId.includes(subjectId);
 
   if (!isOwner && answerData === null) return <></>;
 
@@ -183,3 +189,5 @@ export function FeedAnswer({
     </div>
   );
 }
+
+export default React.memo(FeedAnswer);

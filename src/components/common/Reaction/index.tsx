@@ -8,115 +8,88 @@ import thumbsUpGray from "@/assets/thumbs_up_gray.svg";
 import thumbsDownGray from "@/assets/thumbs_down_gray.svg";
 import { useState } from "react";
 import postReaction from "@/services/questions/postReaction";
+import React from "react";
 
-type ReationProps = {
+type ReactionProps = {
   mode: "like" | "dislike";
-  likeCount?: number;
-  dislikeCount?: number;
-  questionId?: number;
+  questionId: number;
+  initialCount: number;
 };
 
-export function Reaction({
-  mode,
-  likeCount: initialLikeCount = 0,
-  dislikeCount: initialisLikeCount = 0,
-  questionId,
-}: ReationProps) {
+function Reaction({ mode, questionId, initialCount }: ReactionProps) {
+  const [count, setCount] = useState(initialCount);
+  const [clicked, setClicked] = useState(false);
+  const [hasPosted, setHasPosted] = useState(false);
+
   const reactionList = {
     like: {
       img: thumbsUpGray,
-      label: "좋아요",
       clickedImg: thumbsUp,
+      label: "좋아요",
     },
     dislike: {
       img: thumbsDownGray,
-      label: "싫어요",
       clickedImg: thumbsDown,
+      label: "싫어요",
     },
   };
-  const { img, label, clickedImg } = reactionList[mode];
-  const [clicked, setClicked] = useState(false);
-  const [hasPosted, setHasPosted] = useState(false);
-  const [likeCount, setLikeCount] = useState(initialLikeCount);
-  const [dislikeCount, setDislikeCount] = useState(initialisLikeCount);
+
+  const { img, clickedImg, label } = reactionList[mode];
 
   const handleClick = async () => {
     if (clicked) {
       setClicked(false);
-      if (mode === "like") {
-        setLikeCount((prev) => prev - 1);
-      } else {
-        setDislikeCount((prev) => prev - 1);
-      }
+      setCount((prev) => prev - 1);
       return;
     }
 
     setClicked(true);
 
-    if (!hasPosted && questionId) {
-      try {
-        const data = await postReaction({ id: String(questionId), type: mode });
-        if (data) {
-          setLikeCount(data.like);
-          setDislikeCount(data.dislike);
-          setHasPosted(true);
-        }
-      } catch (error) {
-        console.error(error);
-        setClicked(false);
-      }
-    } else {
-      if (mode === "like") {
-        setLikeCount((prev) => prev + 1);
+    try {
+      if (!hasPosted) {
+        const res = await postReaction({ id: String(questionId), type: mode });
+        setCount(mode === "like" ? res.like : res.dislike);
+        setHasPosted(true);
       } else {
-        setDislikeCount((prev) => prev + 1);
+        setCount((prev) => prev + 1);
       }
+    } catch (error) {
+      console.error(error);
+      setClicked(false);
     }
   };
 
   return (
-    <>
-      <button className={styles.reaction} onClick={handleClick}>
-        <Image
-          src={clicked ? clickedImg : img}
-          alt={label}
-          width={16}
-          height={16}
-          className={styles["default-img"]}
-        />
-        <div className={styles["reaction__label-wrapper"]}>
-          <span
-            className={`${styles["reaction__label"]} ${
-              clicked && mode === "like" ? styles["active-label-good"] : ""
-            }
-            ${clicked && mode === "dislike" ? styles["active-label-bad"] : ""}`}
-          >
-            {label}
-          </span>
-          {mode === "like" ? (
-            <span
-              className={`${styles["reaction__label-count"]} ${
-                clicked ? styles["active-label-good-count"] : ""
-              }`}
-            >
-              {likeCount}
-            </span>
-          ) : (
-            ""
-          )}
-          {mode === "dislike" ? (
-            <span
-              className={`${styles["reaction__label-count"]} ${
-                clicked ? styles["active-label-bad-count"] : ""
-              }`}
-            >
-              {dislikeCount}
-            </span>
-          ) : (
-            ""
-          )}
-        </div>
-      </button>
-    </>
+    <button className={styles.reaction} onClick={handleClick}>
+      <Image
+        src={clicked ? clickedImg : img}
+        alt={label}
+        width={16}
+        height={16}
+        className={styles["default-img"]}
+      />
+      <div className={styles["reaction__label-wrapper"]}>
+        <span
+          className={`${styles["reaction__label"]} ${
+            clicked && mode === "like" ? styles["active-label-good"] : ""
+          } ${clicked && mode === "dislike" ? styles["active-label-bad"] : ""}`}
+        >
+          {label}
+        </span>
+        <span
+          className={`${styles["reaction__label-count"]} ${
+            clicked && mode === "like"
+              ? styles["active-label-good-count"]
+              : clicked && mode === "dislike"
+              ? styles["active-label-bad-count"]
+              : ""
+          }`}
+        >
+          {count}
+        </span>
+      </div>
+    </button>
   );
 }
+
+export default React.memo(Reaction)

@@ -63,7 +63,7 @@ function ArrowButton({
   );
 }
 
-export function FloatingButton({
+function FloatingButton({
   mode = "question",
   children,
   onClick,
@@ -114,4 +114,8 @@ export function ShareButton({ mode, onClick }: ShareButtonProps) {
   );
 }
 
-export default React.memo(ArrowButton);
+const MemoizedArrowButton = React.memo(ArrowButton);
+export { MemoizedArrowButton as ArrowButton };
+
+const MemoizedFloatingButton = React.memo(FloatingButton);
+export { MemoizedFloatingButton as FloatingButton };

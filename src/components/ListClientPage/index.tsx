@@ -4,7 +4,7 @@ import { useEffect, useState, useRef, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { getSubjects } from "@/services/subjects/getSubjects";
 import { Subjects } from "@/types/Subjects";
-import ArrowButton from "@/components/common/Button";
+import { ArrowButton } from "@/components/common/Button";
 import Dropdown from "@/components/common/Dropdown";
 import UserCard from "@/components/common/UserCard";
 import Pagination from "@/components/common/Pagination";

@@ -1,17 +1,16 @@
 "use client";
 
-import Image from "next/image";
 import Badge from "../Badge";
-import moreIcon from "@/assets/more_icon.svg";
 import styles from "./index.module.scss";
-import { FeedQuestion } from "../FeedQuestion";
-import { Reaction } from "../Reaction";
-import { FeedAnswer } from "../FeedAnswer";
-import { useEffect, useRef, useState } from "react";
-import { KebabMenu } from "../KebabMenu";
+import FeedQuestion from "../FeedQuestion";
+import Reaction from "../Reaction";
+import FeedAnswer from "../FeedAnswer";
+import { useCallback, useEffect, useRef, useState } from "react";
+import KebabMenu from "../KebabMenu";
 import { Answers, SubjectsQuestions } from "@/types/Subjects";
 import deleteAnswers from "@/services/answers/deleteAnswers";
 import patchAnswers from "@/services/answers/patchAnswers";
+import MoreButton from "@/components/MoreButton";
 
 type FeedCardProps = {
   item: SubjectsQuestions;
@@ -22,13 +21,11 @@ export function FeedCard({ item }: FeedCardProps) {
   const [isEditing, setIsEditing] = useState(false);
   const [answer, setAnswer] = useState<Answers | null>(item.answer);
   const actionDropdownRef = useRef<HTMLDivElement>(null);
-  const [likeCount, setLikeCount] = useState(item.like);
-  const [dislikeCount, setDislikeCount] = useState(item.dislike);
   const [isOwner, setIsOwner] = useState(false);
 
-  const handleClickOpen = () => {
+  const handleClickOpen = useCallback(() => {
     setIsOpen((prev) => !prev);
-  };
+  }, []);
 
   const handleClickOutside = (e: MouseEvent) => {
     if (
@@ -49,12 +46,13 @@ export function FeedCard({ item }: FeedCardProps) {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  const handleIsEditing = () => {
+  const handleIsEditing = useCallback(() => {
     setIsEditing(true);
     setIsOpen(false);
-  };
+  }, []);
 
-  const handleDeleteAnswer = async () => {
+  const handleDeleteAnswer = useCallback(async () => {
+    if (!item.answer) return;
     try {
       await deleteAnswers(String(item.answer.id));
       setAnswer(null);
@@ -62,9 +60,10 @@ export function FeedCard({ item }: FeedCardProps) {
     } catch (error) {
       console.error(error);
     }
-  };
+  }, [item.answer]);
 
-  const handleRejectAnswer = async () => {
+  const handleRejectAnswer = useCallback(async () => {
+    if (!item.answer) return;
     try {
       const updatedAnswer = await patchAnswers({
         isRejected: true,
@@ -75,7 +74,7 @@ export function FeedCard({ item }: FeedCardProps) {
     } catch (error) {
       console.error(error);
     }
-  };
+  }, [item.answer]);
 
   return (
     <div className={styles["feed-card"]}>
@@ -86,32 +85,17 @@ export function FeedCard({ item }: FeedCardProps) {
           <Badge>미답변</Badge>
         )}
         {isOwner && (
-          <div className={styles["feed-card__more-wrapper"]}>
-            <button
-              className={styles["feed-card__more-button"]}
-              onClick={handleClickOpen}
-            >
-              <Image
-                src={moreIcon}
-                alt="더보기"
-                width={26}
-                height={26}
-                className={styles["feed-card__more-img"]}
-              />
-            </button>
-            {isOpen && (
-              <div
-                className={styles["feed-card__dropdown"]}
-                ref={actionDropdownRef}
-              >
-                <KebabMenu
-                  onEdit={handleIsEditing}
-                  onDelete={handleDeleteAnswer}
-                  onReject={handleRejectAnswer}
-                />
-              </div>
-            )}
-          </div>
+          <MoreButton
+            isOpen={isOpen}
+            onToggle={handleClickOpen}
+            dropdownRef={actionDropdownRef}
+          >
+            <KebabMenu
+              onEdit={handleIsEditing}
+              onDelete={handleDeleteAnswer}
+              onReject={handleRejectAnswer}
+            />
+          </MoreButton>
         )}
       </div>
 
@@ -120,18 +104,17 @@ export function FeedCard({ item }: FeedCardProps) {
       <FeedAnswer
         subjectId={item.subjectId}
         answers={answer}
-        questionId={item.id}
         isEditing={isEditing}
         setIsEditing={setIsEditing}
       />
 
       <div className={styles["feed-card__bottom-line"]}></div>
       <div className={styles["feed-card__reaction-wrapper"]}>
-        <Reaction mode="like" likeCount={likeCount} questionId={item.id} />
+        <Reaction mode="like" questionId={item.id} initialCount={item.like} />
         <Reaction
           mode="dislike"
-          dislikeCount={dislikeCount}
           questionId={item.id}
+          initialCount={item.dislike}
         />
       </div>
     </div>
