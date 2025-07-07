@@ -1,12 +1,13 @@
 import { useRelativeDate } from "@/hooks/useRelativeDate";
 import styles from "./index.module.scss";
+import React from "react";
 
 type FeedQuestionProps = {
   question: string;
   createdAt: string;
 };
 
-export function FeedQuestion({ question, createdAt }: FeedQuestionProps) {
+function FeedQuestion({ question, createdAt }: FeedQuestionProps) {
   return (
     <div className={styles["feed-question"]}>
       <div className={styles["feed-question__top-wrapper"]}>
@@ -17,3 +18,5 @@ export function FeedQuestion({ question, createdAt }: FeedQuestionProps) {
     </div>
   );
 }
+
+export default React.memo(FeedQuestion);
