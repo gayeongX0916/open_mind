@@ -148,6 +148,14 @@ export default function ListClientPage({
             </button>
           </li>
         ))}
+        {Array(limitSize - paginatedList.length)
+          .fill(null)
+          .map((_, i) => (
+            <li
+              key={`empty-${i}`}
+              className={styles["user-card-placeholder"]}
+            ></li>
+          ))}
       </ul>
       <nav className={styles.pagination}>
         <Pagination
