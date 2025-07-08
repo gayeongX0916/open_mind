@@ -33,6 +33,9 @@ export default function ListClientPage({
   const router = useRouter();
   const wrapperRef = useRef<HTMLUListElement | null>(null);
 
+  const [isLoading, setIsLoading] = useState(false);
+  const [hasFetchedOnce, setHasFetchedOnce] = useState(false);
+
   useEffect(() => {
     const handleResize = () => {
       if (!wrapperRef.current) return;
@@ -41,7 +44,12 @@ export default function ListClientPage({
       const cardMinWidth = 186;
       const cardCount = Math.floor((wrapperWidth + gap) / (cardMinWidth + gap));
       const adjustedCardCount = Math.max(3, Math.min(cardCount, 4));
-      setLimitSize(adjustedCardCount * 2);
+      const newLimit = adjustedCardCount * 2;
+
+      setLimitSize((prev) => {
+        if (prev !== newLimit) return newLimit;
+        return prev;
+      });
     };
 
     handleResize();
@@ -61,6 +69,7 @@ export default function ListClientPage({
 
   useEffect(() => {
     const fetchAllSubjects = async () => {
+      setIsLoading(true);
       let offset = 0;
       let allData: Subjects[] = [];
 
@@ -74,6 +83,8 @@ export default function ListClientPage({
       const sorted = sortedSubjects(allData, sortedOption);
       setSortedList(sorted);
       setCurrentPage(1);
+      setIsLoading(false);
+      setHasFetchedOnce(true);
     };
 
     fetchAllSubjects();
@@ -134,21 +145,43 @@ export default function ListClientPage({
         </div>
       </div>
       <ul ref={wrapperRef} className={styles["user-card-wrapper"]}>
-        {paginatedList.map(({ id, imageSource, name, questionCount }) => (
-          <li key={id}>
-            <button
-              className={styles["user-card-button"]}
-              onClick={() => handlePageChange(id)}
-            >
-              <UserCard
-                img={imageSource}
-                nickname={name}
-                question={questionCount}
-              />
-            </button>
-          </li>
-        ))}
+        {isLoading && hasFetchedOnce ? (
+          Array(limitSize)
+            .fill(null)
+            .map((_, i) => (
+              <li key={`skeleton-${i}`}>
+                <div className={styles["user-card-skeleton"]}></div>
+              </li>
+            ))
+        ) : (
+          <>
+            {paginatedList.map(({ id, imageSource, name, questionCount }) => (
+              <li key={id}>
+                <button
+                  className={styles["user-card-button"]}
+                  onClick={() => handlePageChange(id)}
+                >
+                  <UserCard
+                    img={imageSource}
+                    nickname={name}
+                    question={questionCount}
+                  />
+                </button>
+              </li>
+            ))}
+
+            {Array(limitSize - paginatedList.length)
+              .fill(null)
+              .map((_, i) => (
+                <li
+                  key={`empty-${i}`}
+                  className={styles["user-card-placeholder"]}
+                ></li>
+              ))}
+          </>
+        )}
       </ul>
+
       <nav className={styles.pagination}>
         <Pagination
           pageSize={limitSize}

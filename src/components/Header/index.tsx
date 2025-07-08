@@ -9,12 +9,14 @@ import { Toast } from "../common/Toast";
 import { useEffect, useState } from "react";
 import { Subjects } from "@/types/Subjects";
 import getSubjectsDetails from "@/services/subjects/getSubjectsDetail";
+import { useRouter } from "next/navigation";
 
 type HeaderProps = {
   subjectId: number;
 };
 
 export default function Header({ subjectId }: HeaderProps) {
+  const router = useRouter();
   const [toastMessage, setToastMessage] = useState("");
   const [details, setDetails] = useState<Subjects>({
     id: 0,
@@ -78,6 +80,7 @@ export default function Header({ subjectId }: HeaderProps) {
         width={170}
         height={67}
         className={styles["header-logo"]}
+        onClick={() => router.push("/")}
       />
       {details.imageSource && (
         <Image
