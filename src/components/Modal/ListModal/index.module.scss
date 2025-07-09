@@ -23,11 +23,22 @@
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 1001;
+
+  display: flex;
+  max-height: 400px;
+  flex-direction: column;
 }
 
 .close-button {
   display: flex;
   justify-content: flex-end;
+  margin-bottom: 10px;
+}
+
+.list-scroll-wrapper {
+  flex: 1;
+  overflow-y: scroll;
+  padding-right: 20px;
 }
 
 .list-modal-item {
