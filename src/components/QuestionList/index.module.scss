@@ -12,11 +12,7 @@
   margin-top: 20px;
   width: 716px;
 
-  @include tablet {
-    width: 100%;
-  }
-
-  @include mobile {
+  @include mobile-tablet {
     width: 100%;
   }
 }
