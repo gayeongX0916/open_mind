@@ -1,10 +1,6 @@
-import { ArrowButton } from "@/components/common/Button";
 import styles from "./index.module.scss";
-import Image from "next/image";
-import rejectionIcon from "@/assets/rejection_icon.svg";
 import deleteSubjects from "@/services/subjects/deleteSubjects";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
 
 type DeleteModalProps = {
   subjectId: string;

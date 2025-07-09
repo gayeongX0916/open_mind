@@ -4,7 +4,7 @@ import Image from "next/image";
 import styles from "./index.module.scss";
 import arrowDownGray from "@/assets/arrow_down_gray.svg";
 import arrowUp from "@/assets/arrow_up.svg";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import React from "react";
 
 type DropdownProps = {

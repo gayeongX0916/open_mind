@@ -4,7 +4,7 @@ import styles from "./index.module.scss";
 import messageIcon from "@/assets/message_icon.svg";
 import closeIcon from "@/assets/close_icon.svg";
 import Image from "next/image";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import postSubjectsQuestions from "@/services/subjects/postSubjectsQuestions";
 import getSubjectsDetails from "@/services/subjects/getSubjectsDetail";
 import { InputTextarea } from "@/components/common/Input";

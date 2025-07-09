@@ -11,7 +11,7 @@ import QuestionList from "@/components/QuestionList";
 import DeleteModal from "@/components/Modal/DeleteModal";
 import FeedCardSkeleton from "@/components/Skeleton/FeedCardSkeleton";
 
-export default function postAnswerPage() {
+export default function PostAnswerPage() {
   const { id } = useParams();
   const [questionCount, setQuestionCount] = useState(0);
   const [questionList, setQuestionList] = useState<SubjectsQuestions[]>([]);
