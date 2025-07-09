@@ -29,27 +29,33 @@ export default function ListModal({
           </button>
         </div>
         <div className={styles["list-scroll-wrapper"]}>
-          {personalList.map(({ id, name, imageSource, questionCount }) => (
-            <button
-              key={id}
-              className={styles["list-modal-item"]}
-              onClick={() => router.push(`/post/${id}/answer`)}
-            >
-              <Image
-                src={imageSource}
-                alt="프로필"
-                width={60}
-                height={60}
-                className={styles.profile}
-              />
-              <div className={styles["right-wrapper"]}>
-                <span className={styles.nickname}>{name}</span>
-                <span className={styles.questionCount}>
-                  {`받은질문 : ${questionCount}개`}
-                </span>
-              </div>
-            </button>
-          ))}
+          {personalList.length === 0 ? (
+            <div className={styles['personalList-no']}></div>
+          ) : (
+            <>
+              {personalList.map(({ id, name, imageSource, questionCount }) => (
+                <button
+                  key={id}
+                  className={styles["list-modal-item"]}
+                  onClick={() => router.push(`/post/${id}/answer`)}
+                >
+                  <Image
+                    src={imageSource}
+                    alt="프로필"
+                    width={60}
+                    height={60}
+                    className={styles.profile}
+                  />
+                  <div className={styles["right-wrapper"]}>
+                    <span className={styles.nickname}>{name}</span>
+                    <span className={styles.questionCount}>
+                      {`받은질문 : ${questionCount}개`}
+                    </span>
+                  </div>
+                </button>
+              ))}
+            </>
+          )}
         </div>
       </div>
     </>
