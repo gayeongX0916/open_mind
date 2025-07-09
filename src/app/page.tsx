@@ -13,11 +13,11 @@ import { postSubjects } from "@/services/subjects/postSubjects";
 const Home = () => {
   const router = useRouter();
   const [nameInput, setNameInput] = useState("");
-  const [loading, setLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
-    setLoading(true);
+    setIsLoading(true);
 
     try {
       const { id } = await postSubjects({ name: nameInput, team: "1-50" });
@@ -29,7 +29,7 @@ const Home = () => {
     } catch (err) {
       console.error("에러발생", err);
     } finally {
-      setLoading(false);
+      setIsLoading(false);
     }
   };
 
@@ -52,8 +52,8 @@ const Home = () => {
           value={nameInput}
           onChange={(e) => setNameInput(e.target.value)}
         />
-        <ArrowButton mode="question" showArrow={false} disabled={loading}>
-          {loading ? "로딩 중..." : "질문 받기"}
+        <ArrowButton mode="question" showArrow={false} disabled={isLoading}>
+          {isLoading ? "로딩 중..." : "질문 받기"}
         </ArrowButton>
       </form>
       <div className={styles["main-character"]}>
