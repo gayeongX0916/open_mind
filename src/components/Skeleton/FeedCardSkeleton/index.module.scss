@@ -1,3 +1,5 @@
+@use "@/styles/_media.scss" as *;
+
 .feed-detail-page {
   padding: 0 16px;
 }
@@ -54,11 +56,14 @@
 }
 
 .questionList {
+  margin: 0 auto;
   margin-top: 32px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
   gap: 16px;
+  width: 716px;
+
+  @include mobile-tablet {
+    width: 100%;
+  }
 }
 
 .questionCard {
