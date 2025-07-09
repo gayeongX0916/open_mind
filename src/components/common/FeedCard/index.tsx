@@ -102,6 +102,7 @@ export function FeedCard({ item }: FeedCardProps) {
       <FeedQuestion question={item.content} createdAt={item.createdAt} />
 
       <FeedAnswer
+        questionId={item.id}
         subjectId={item.subjectId}
         answers={answer}
         isEditing={isEditing}

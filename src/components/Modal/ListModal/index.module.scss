@@ -37,8 +37,8 @@
 
 .list-scroll-wrapper {
   flex: 1;
-  overflow-y: scroll;
-  padding-right: 20px;
+  overflow-y: auto;
+  scrollbar-gutter: stable;
 }
 
 .list-modal-item {
