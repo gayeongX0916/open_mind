@@ -13,7 +13,7 @@ import styles from "./index.module.scss";
 import Image from "next/image";
 import smallLogo from "@/assets/small_logo.svg";
 
-interface ListClientPageProps {
+type ListClientPageProps = {
   initialSubjects: Subjects[];
   limit: number;
 }

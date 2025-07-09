@@ -8,11 +8,12 @@ import { ArrowButton } from "../Button";
 import getSubjectsDetails from "@/services/subjects/getSubjectsDetail";
 import { Answers } from "@/types/Subjects";
 import { useRelativeDate } from "@/hooks/useRelativeDate";
-import postQuestionAnswers from "@/services/questions/postQuestionAnswers";
 import putAnswers from "@/services/answers/putAnswers";
 import React from "react";
+import postQuestionAnswers from "@/services/questions/postQuestionAnswers";
 
 type FeedAnswerProps = {
+  questionId: number;
   subjectId: number;
   answers: Answers | null;
   isEditing: boolean;
@@ -20,6 +21,7 @@ type FeedAnswerProps = {
 };
 
 function FeedAnswer({
+  questionId,
   subjectId,
   answers,
   isEditing,
@@ -71,7 +73,6 @@ function FeedAnswer({
     };
     try {
       const updatedContent = await putAnswers(payload);
-
       if (updatedContent) {
         setAnswerData((prev) =>
           prev
@@ -87,36 +88,30 @@ function FeedAnswer({
     } catch (error) {
       console.error(error);
     }
-  }, []);
+  }, [value, answers]);
 
   const postAnswerForm = useCallback(async () => {
     const payload = {
       data: {
+        questionId,
         content: value,
         isRejected: false,
+        team: "1-50",
       },
       team: "1-50",
-      id: String(answers!.id),
+      question_id: String(questionId),
     };
-    try {
-      const updatedContent = await putAnswers(payload);
 
-      if (updatedContent) {
-        setAnswerData((prev) =>
-          prev
-            ? {
-                ...prev,
-                content: updatedContent,
-                isRejected: false,
-              }
-            : null
-        );
+    try {
+      const newAnswer = await postQuestionAnswers(payload);
+      if (newAnswer) {
+        setAnswerData(newAnswer);
+        setIsCompleted(true);
       }
-      setIsEditing(false);
     } catch (error) {
       console.error(error);
     }
-  }, []);
+  }, [value, questionId]);
 
   const renderTextarea = () => {
     return (
@@ -137,7 +132,7 @@ function FeedAnswer({
       </div>
     );
   };
-
+  
   const renderAnswerContent = () => {
     if (!answerData) return null;
 

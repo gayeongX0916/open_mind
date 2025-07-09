@@ -7,30 +7,34 @@ import mainCharacter from "@/assets/main_background.svg";
 import { ArrowButton } from "@/components/common/Button";
 import { useRouter } from "next/navigation";
 import { InputField } from "@/components/common/Input";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import { postSubjects } from "@/services/subjects/postSubjects";
 
 const Home = () => {
   const router = useRouter();
   const [nameInput, setNameInput] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
+    setIsLoading(true);
 
-    const { id } = await postSubjects({ name: nameInput, team: "1-50" });
+    try {
+      const { id } = await postSubjects({ name: nameInput, team: "1-50" });
 
-    const stored = JSON.parse(localStorage.getItem("personalId") || "[]");
-    stored.push(id);
-    localStorage.setItem("personalId", JSON.stringify(stored));
-    router.push(`/post/${id}/answer`);
+      const stored = JSON.parse(localStorage.getItem("personalId") || "[]");
+      stored.push(id);
+      localStorage.setItem("personalId", JSON.stringify(stored));
+      router.push(`/post/${id}/answer`);
+    } catch (err) {
+      console.error("에러발생", err);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const handleGotoList = useCallback(() => {
     router.push("/list");
-  }, [router]);
-
-  useEffect(() => {
-    router.prefetch("/list");
   }, [router]);
 
   return (
@@ -48,8 +52,8 @@ const Home = () => {
           value={nameInput}
           onChange={(e) => setNameInput(e.target.value)}
         />
-        <ArrowButton mode="question" showArrow={false}>
-          질문 받기
+        <ArrowButton mode="question" showArrow={false} disabled={isLoading}>
+          {isLoading ? "로딩 중..." : "질문 받기"}
         </ArrowButton>
       </form>
       <div className={styles["main-character"]}>

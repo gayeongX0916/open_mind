@@ -92,4 +92,4 @@ function Reaction({ mode, questionId, initialCount }: ReactionProps) {
   );
 }
 
-export default React.memo(Reaction)
+export default React.memo(Reaction);
