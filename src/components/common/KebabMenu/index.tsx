@@ -1,11 +1,5 @@
 "use client";
-
-import editIcon from "@/assets/edit_icon.svg";
-import closeIcon from "@/assets/close_icon.svg";
-import editBlueIcon from "@/assets/edit_blue_icon.svg";
-import closeBlueIcon from "@/assets/close_blue_icon.svg";
 import styles from "./index.module.scss";
-import { useState } from "react";
 import React from "react";
 
 type ActionKey = "edit" | "delete" | "reject";

@@ -5,7 +5,7 @@ import KakaoScript from "@/services/KakaoScript";
 
 declare global {
   interface Window {
-    Kakao: any;
+    Kakao: any; // eslint-disable-line @typescript-eslint/no-explicit-any
   }
 }
 

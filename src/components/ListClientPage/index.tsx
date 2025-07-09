@@ -88,7 +88,7 @@ export default function ListClientPage({
     };
 
     fetchAllSubjects();
-  }, [sortedOption]);
+  }, [sortedOption,limitSize]);
 
   const sortedSubjects = (data: Subjects[], option: string) => {
     const copy = [...data];

@@ -88,7 +88,7 @@ function FeedAnswer({
     } catch (error) {
       console.error(error);
     }
-  }, [value, answers]);
+  }, [value, answers, setIsEditing]);
 
   const postAnswerForm = useCallback(async () => {
     const payload = {
@@ -132,7 +132,7 @@ function FeedAnswer({
       </div>
     );
   };
-  
+
   const renderAnswerContent = () => {
     if (!answerData) return null;
 

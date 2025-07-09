@@ -7,7 +7,7 @@ type postSubjectsQuestionsProps = {
     team: string;
     answer: {
       content: string;
-      isRejected: Boolean;
+      isRejected: boolean;
     };
   };
   team: string;
