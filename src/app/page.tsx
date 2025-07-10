@@ -63,6 +63,7 @@ const Home = () => {
           className={styles["main-character-img"]}
           width={1200}
           height={627}
+          priority
         />
       </div>
     </main>
