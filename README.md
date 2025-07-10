@@ -27,3 +27,4 @@ CRUD(Create, Read, Update, Delete) 기능을 중심으로, 답변 작성, 수정
 - 카카오톡 공유 기능: 외부 플랫폼과의 연동을 위한 API 직접 리서치 및 적용
 
 ## 배포 링크
+https://openmind-kimgayeongs-projects.vercel.app/
