@@ -12,11 +12,12 @@ import ListModal from "@/components/Modal/ListModal";
 import styles from "./index.module.scss";
 import Image from "next/image";
 import smallLogo from "@/assets/small_logo.svg";
+import ListSkeleton from "../Skeleton/ListSkeleton";
 
 type ListClientPageProps = {
   initialSubjects: Subjects[];
   limit: number;
-}
+};
 
 export default function ListClientPage({
   initialSubjects,
@@ -88,7 +89,7 @@ export default function ListClientPage({
     };
 
     fetchAllSubjects();
-  }, [sortedOption,limitSize]);
+  }, [sortedOption, limitSize]);
 
   const sortedSubjects = (data: Subjects[], option: string) => {
     const copy = [...data];
@@ -146,13 +147,7 @@ export default function ListClientPage({
       </div>
       <ul ref={wrapperRef} className={styles["user-card-wrapper"]}>
         {isLoading && hasFetchedOnce ? (
-          Array(limitSize)
-            .fill(null)
-            .map((_, i) => (
-              <li key={`skeleton-${i}`}>
-                <div className={styles["user-card-skeleton"]}></div>
-              </li>
-            ))
+          <ListSkeleton count={limitSize} />
         ) : (
           <>
             {paginatedList.map(({ id, imageSource, name, questionCount }) => (
