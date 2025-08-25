@@ -2,7 +2,7 @@
 
 ## 📌 프로젝트 개요
 오픈마인드는 **익명성을 기반으로 사용자 의견을 수집하고 피드백을 주고받을 수 있는 SNS형 웹 애플리케이션**입니다.  
-CRUD(Create, Read, Update, Delete)를 중심으로 답변 작성, 수정, 삭제, 좋아요/싫어요 등의 상호작용을 제공하며, 사용자의 의견을 효과적으로 기록하고 공유할 수 있습니다.
+답변 작성, 수정, 삭제, 좋아요/싫어요 등 CRUD 기능을 제공하며, 사용자의 의견을 효과적으로 기록하고 공유할 수 있습니다.
 
 ## 🛠 기술 스택
 <p align="left">
@@ -15,11 +15,11 @@ CRUD(Create, Read, Update, Delete)를 중심으로 답변 작성, 수정, 삭제
 </p>
 
 - **데이터 저장**: LocalStorage (계정 생성 및 저장)  
-- **API 연동**: Swagger 기반 API 명세 활용  
+- **API 연동**: fetch + Swagger 기반 API 명세 활용  
 
 ## 📂 폴더 구조
-- **components/** – 공통 UI 컴포넌트
-- **app/** – 라우팅 기반 페이지 구조 (Next.js App Router)
+- **app/** – Next.js App Router 기반 페이지 라우팅
+- **components/** – 재사용 가능한 UI 컴포넌트
 - **styles/** – SCSS 모듈 스타일 파일
 - **services/** – API 요청 함수
 - **hooks/** – 커스텀 훅 모음
@@ -27,12 +27,13 @@ CRUD(Create, Read, Update, Delete)를 중심으로 답변 작성, 수정, 삭제
 
 ## ✨ 주요 기능
 - **UI/UX**
-  - 반응형 UI: 다양한 해상도 대응  
-  - 스켈레톤 UI: 로딩 시 사용자 경험 개선  
+  - 반응형 UI(다양한 해상도 대응) 
+  - 스켈레톤 UI(로딩 시 사용자 경험 개선)  
 
 - **성능 최적화**
+  - useMemo, useCallback, React.memo 적극 활용
   - 재렌더링 최소화를 고려한 컴포넌트 구조  
-  - 페이지네이션을 통한 대량 데이터 효율적 탐색  
+  - 페이지네이션으로 대량 데이터 효율적 탐색  
 
 - **계정 및 데이터 관리**
   - 로컬 계정 생성 (LocalStorage 활용)  
