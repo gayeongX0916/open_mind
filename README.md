@@ -19,6 +19,7 @@
 
 ## 📂 폴더 구조
 - **app/** – Next.js App Router 기반 페이지 라우팅
+- **assets/** – 이미지, 아이콘 등 정적 리소스
 - **components/** – 재사용 가능한 UI 컴포넌트
 - **styles/** – SCSS 모듈 스타일 파일
 - **services/** – API 요청 함수
