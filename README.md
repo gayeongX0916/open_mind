@@ -42,7 +42,7 @@ CRUD(Create, Read, Update, Delete)를 중심으로 답변 작성, 수정, 삭제
   - 카카오톡 공유 기능
 
 ## 🚀 배포 링크
-[OpenMind 바로가기](https://openmind-kimgayeongs-projects.vercel.app/)
+[OpenMind 바로가기](https://openmind-psi.vercel.app)
 
 ## 🎨 디자인 & 문서
 - [Figma 디자인](https://www.figma.com/design/sy1OrnQQF3y7E78ioeGsaM/OPENMIND?node-id=0-1&p=f&t=AF6lCOdT1lmZIgxd-0)  
