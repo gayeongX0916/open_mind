@@ -34,7 +34,8 @@
 - **성능 최적화**
   - useMemo, useCallback, React.memo 적극 활용
   - 재렌더링 최소화를 고려한 컴포넌트 구조  
-  - 페이지네이션으로 대량 데이터 효율적 탐색  
+  - 페이지네이션으로 대량 데이터 효율적 탐색
+  - SSR(Server Side Rendering) + CSR(Client Side Rendering) 적용
 
 - **계정 및 데이터 관리**
   - **로컬 계정 생성** (LocalStorage 활용)  
