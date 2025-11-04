@@ -51,3 +51,6 @@
 - [Figma 디자인](https://www.figma.com/design/sy1OrnQQF3y7E78ioeGsaM/OPENMIND?node-id=0-1&p=f&t=AF6lCOdT1lmZIgxd-0)  
 - [Swagger API 문서](https://openmind-api.vercel.app/docs/)  
 - [프로젝트 컨벤션](https://chivalrous-barberry-9bb.notion.site/OpenMind-254a83bcc886808b878ef679236ee7c5?source=copy_link)
+
+## 🔧 개선 내역
+## 🧭 향후 계획
