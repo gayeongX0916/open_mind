@@ -114,8 +114,13 @@ function FeedAnswer({
         setAnswerData(newAnswer);
         setIsCompleted(true);
       }
+      toast.success("답변이 등록되었습니다.");
     } catch (error) {
-      console.error(error);
+      toast.error(
+        error instanceof Error
+          ? error.message
+          : "답변 등록 중 오류가 발생했습니다."
+      );
     }
   }, [value, questionId]);
 

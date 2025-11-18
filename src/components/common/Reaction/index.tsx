@@ -9,6 +9,7 @@ import thumbsDownGray from "@/assets/thumbs_down_gray.svg";
 import { useState } from "react";
 import postReaction from "@/services/questions/postReaction";
 import React from "react";
+import { toast } from "react-toastify";
 
 type ReactionProps = {
   mode: "like" | "dislike";
@@ -53,8 +54,13 @@ function Reaction({ mode, questionId, initialCount }: ReactionProps) {
       } else {
         setCount((prev) => prev + 1);
       }
+      toast.success("리액션이 반영되었습니다.");
     } catch (error) {
-      console.error(error);
+      toast.error(
+        error instanceof Error
+          ? error.message
+          : "리액션 반영 중 오류가 발생했습니다."
+      );
       setClicked(false);
     }
   };
