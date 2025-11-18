@@ -50,9 +50,17 @@ function FeedAnswer({
 
   useEffect(() => {
     const fetchDetailSubjects = async (id: number) => {
-      const { imageSource, name } = await getSubjectsDetails(id);
-      setImageURL(imageSource);
-      setNickname(name);
+      try {
+        const { imageSource, name } = await getSubjectsDetails(id);
+        setImageURL(imageSource);
+        setNickname(name);
+      } catch (error) {
+        toast.error(
+          error instanceof Error
+            ? error.message
+            : "상세 정보를 불러오는 중 오류가 발생했습니다."
+        );
+      }
     };
 
     fetchDetailSubjects(Number(subjectId));

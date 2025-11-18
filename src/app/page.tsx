@@ -9,6 +9,7 @@ import { useRouter } from "next/navigation";
 import { InputField } from "@/components/common/Input";
 import { useCallback, useState } from "react";
 import { postSubjects } from "@/services/subjects/postSubjects";
+import { toast } from "react-toastify";
 
 const Home = () => {
   const router = useRouter();
@@ -26,8 +27,13 @@ const Home = () => {
       stored.push(id);
       localStorage.setItem("personalId", JSON.stringify(stored));
       router.push(`/post/${id}/answer`);
-    } catch (err) {
-      console.error("에러발생", err);
+      toast.success("피드가 성공적으로 생성되었습니다!");
+    } catch (error) {
+      toast.error(
+        error instanceof Error
+          ? error.message
+          : "피드 생성 중 오류가 발생했습니다."
+      );
     } finally {
       setIsLoading(false);
     }

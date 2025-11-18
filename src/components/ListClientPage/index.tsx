@@ -13,6 +13,7 @@ import styles from "./index.module.scss";
 import Image from "next/image";
 import smallLogo from "@/assets/small_logo.svg";
 import ListSkeleton from "../Skeleton/ListSkeleton";
+import { toast } from "react-toastify";
 
 type ListClientPageProps = {
   initialSubjects: Subjects[];
@@ -68,12 +69,13 @@ export default function ListClientPage({
     setPersonalList(personal);
   }, [sortedList, storedId]);
 
-  useEffect(() => {
-    const fetchAllSubjects = async () => {
-      setIsLoading(true);
-      let offset = 0;
-      let allData: Subjects[] = [];
+useEffect(() => {
+  const fetchAllSubjects = async () => {
+    setIsLoading(true);
+    let offset = 0;
+    let allData: Subjects[] = [];
 
+    try {
       while (true) {
         const { results } = await getSubjects(limitSize, offset);
         allData = [...allData, ...results];
@@ -84,12 +86,20 @@ export default function ListClientPage({
       const sorted = sortedSubjects(allData, sortedOption);
       setSortedList(sorted);
       setCurrentPage(1);
+    } catch (error) {
+      toast.error(
+        error instanceof Error
+          ? error.message
+          : "피드를 가져오는 중 오류가 발생했습니다."
+      );
+    } finally {
       setIsLoading(false);
       setHasFetchedOnce(true);
-    };
+    }
+  };
 
-    fetchAllSubjects();
-  }, [sortedOption, limitSize]);
+  fetchAllSubjects();
+}, [sortedOption, limitSize]);
 
   const sortedSubjects = (data: Subjects[], option: string) => {
     const copy = [...data];
