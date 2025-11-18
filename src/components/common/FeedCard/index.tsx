@@ -11,6 +11,7 @@ import { Answers, SubjectsQuestions } from "@/types/Subjects";
 import deleteAnswers from "@/services/answers/deleteAnswers";
 import patchAnswers from "@/services/answers/patchAnswers";
 import MoreButton from "@/components/MoreButton";
+import { toast } from "react-toastify";
 
 type FeedCardProps = {
   item: SubjectsQuestions;
@@ -57,10 +58,15 @@ export function FeedCard({ item }: FeedCardProps) {
       await deleteAnswers(String(item.answer.id));
       setAnswer(null);
       setIsOpen(false);
+      toast.success("답변이 삭제되었습니다.");
     } catch (error) {
-      console.error(error);
+      toast.error(
+        error instanceof Error
+          ? error.message
+          : "답변 삭제 중 오류가 발생했습니다."
+      );
     }
-  }, [item.answer]);
+  }, [item.answer, setAnswer, setIsOpen]);
 
   const handleRejectAnswer = useCallback(async () => {
     if (!item.answer) return;
@@ -71,10 +77,15 @@ export function FeedCard({ item }: FeedCardProps) {
       });
       setAnswer(updatedAnswer);
       setIsOpen(false);
+      toast.success("답변이 거절 처리되었습니다.");
     } catch (error) {
-      console.error(error);
+      toast.error(
+        error instanceof Error
+          ? error.message
+          : "답변 거절 처리 중 오류가 발생했습니다."
+      );
     }
-  }, [item.answer]);
+  }, [item.answer, setAnswer, setIsOpen]);
 
   return (
     <div className={styles["feed-card"]}>

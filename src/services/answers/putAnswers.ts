@@ -8,7 +8,6 @@ type putAnswersProps = {
 };
 
 export default async function putAnswers({ data, team, id }: putAnswersProps) {
-  try {
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_API_BASE_URL}/answers/${id}/`,
       {
@@ -27,7 +26,4 @@ export default async function putAnswers({ data, team, id }: putAnswersProps) {
     }
     const { content } = await res.json();
     return content;
-  } catch (error) {
-    console.error(error);
-  }
 }

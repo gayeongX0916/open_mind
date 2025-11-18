@@ -1,14 +1,17 @@
-import { ReactNode } from "react"
-import styles from "./index.module.scss"
+import { Flip, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
-type ToastProps={
-children:ReactNode
-}
-
-export function Toast({children}:ToastProps){
-return(
-  <div className={styles.toast}>
-    {children}
-  </div>
-)
+export function ToastProvider() {
+  return (
+    <ToastContainer
+      position="top-right"
+      autoClose={3000}
+      hideProgressBar={false}
+      newestOnTop={false}
+      closeOnClick
+      pauseOnHover
+      theme="light"
+      transition={Flip}
+    />
+  );
 }

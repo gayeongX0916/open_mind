@@ -11,6 +11,7 @@ import { useRelativeDate } from "@/hooks/useRelativeDate";
 import putAnswers from "@/services/answers/putAnswers";
 import React from "react";
 import postQuestionAnswers from "@/services/questions/postQuestionAnswers";
+import { toast } from "react-toastify";
 
 type FeedAnswerProps = {
   questionId: number;
@@ -85,8 +86,13 @@ function FeedAnswer({
         );
       }
       setIsEditing(false);
+      toast.success("답변이 수정되었습니다.");
     } catch (error) {
-      console.error(error);
+      toast.error(
+        error instanceof Error
+          ? error.message
+          : "답변 수정 중 오류가 발생했습니다."
+      );
     }
   }, [value, answers, setIsEditing]);
 
