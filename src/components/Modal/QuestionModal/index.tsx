@@ -40,7 +40,6 @@ function QuestionModal({ subjectId, onModalChange }: QuestionModalProps) {
 
     try {
       await postSubjectsQuestions(payload);
-      toast.success("질문이 성공적으로 생성되었습니다!");
     } catch (error) {
       toast.error(
         error instanceof Error
