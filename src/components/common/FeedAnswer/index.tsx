@@ -19,6 +19,7 @@ type FeedAnswerProps = {
   answers: Answers | null;
   isEditing: boolean;
   setIsEditing: (edit: boolean) => void;
+  onAnswerChange?: (answer: Answers | null) => void;
 };
 
 function FeedAnswer({
@@ -27,6 +28,7 @@ function FeedAnswer({
   answers,
   isEditing,
   setIsEditing,
+  onAnswerChange,
 }: FeedAnswerProps) {
   const [isOwner, setIsOwner] = useState(false);
   const [isCompleted, setIsCompleted] = useState(false);
@@ -37,6 +39,7 @@ function FeedAnswer({
 
   useEffect(() => {
     setAnswerData(answers);
+    setValue(answers?.content || "");
   }, [answers]);
 
   useEffect(() => {
@@ -72,26 +75,32 @@ function FeedAnswer({
   }, [subjectId]);
 
   const handleEditAnswer = useCallback(async () => {
+    if (!answerData) return; 
+
     const payload = {
       data: {
         content: value,
         isRejected: false,
       },
       team: "1-50",
-      id: String(answers!.id),
+      id: String(answerData.id),
     };
+
     try {
       const updatedContent = await putAnswers(payload);
       if (updatedContent) {
-        setAnswerData((prev) =>
-          prev
-            ? {
-                ...prev,
-                content: updatedContent,
-                isRejected: false,
-              }
-            : null
-        );
+        setAnswerData((prev) => {
+          if (!prev) return prev;
+          const updated = {
+            ...prev,
+            content: updatedContent,
+            isRejected: false,
+          };
+
+          onAnswerChange?.(updated);
+
+          return updated;
+        });
       }
       setIsEditing(false);
       toast.success("답변이 수정되었습니다.");
@@ -102,7 +111,7 @@ function FeedAnswer({
           : "답변 수정 중 오류가 발생했습니다."
       );
     }
-  }, [value, answers, setIsEditing]);
+  }, [value, answerData, onAnswerChange, setIsEditing]);
 
   const postAnswerForm = useCallback(async () => {
     const payload = {
@@ -121,6 +130,8 @@ function FeedAnswer({
       if (newAnswer) {
         setAnswerData(newAnswer);
         setIsCompleted(true);
+
+        onAnswerChange?.(newAnswer);
       }
       toast.success("답변이 등록되었습니다.");
     } catch (error) {
@@ -130,7 +141,7 @@ function FeedAnswer({
           : "답변 등록 중 오류가 발생했습니다."
       );
     }
-  }, [value, questionId]);
+  }, [value, questionId, onAnswerChange]);
 
   const renderTextarea = () => {
     return (
