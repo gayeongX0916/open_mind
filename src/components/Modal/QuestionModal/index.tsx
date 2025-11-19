@@ -10,6 +10,7 @@ import getSubjectsDetails from "@/services/subjects/getSubjectsDetail";
 import { InputTextarea } from "@/components/common/Input";
 import { ArrowButton } from "@/components/common/Button";
 import React from "react";
+import { toast } from "react-toastify";
 
 type QuestionModalProps = {
   subjectId: number;
@@ -40,15 +41,28 @@ function QuestionModal({ subjectId, onModalChange }: QuestionModalProps) {
     try {
       await postSubjectsQuestions(payload);
     } catch (error) {
-      console.error(error);
+      toast.error(
+        error instanceof Error
+          ? error.message
+          : "질문 생성 중 오류가 발생했습니다."
+      );
     }
   }, [subjectId, questionInput]);
 
   useEffect(() => {
     const fetchSubjectsImg = async (id: number) => {
-      const { imageSource } = await getSubjectsDetails(id);
-      setImgSource(imageSource);
+      try {
+        const { imageSource } = await getSubjectsDetails(id);
+        setImgSource(imageSource);
+      } catch (error) {
+        toast.error(
+          error instanceof Error
+            ? error.message
+            : "이미지를 불러오는 중 오류가 발생했습니다."
+        );
+      }
     };
+
     fetchSubjectsImg(Number(subjectId));
   }, [subjectId]);
 

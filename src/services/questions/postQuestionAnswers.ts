@@ -14,27 +14,23 @@ export default async function postQuestionAnswers({
   team,
   question_id,
 }: postQuestionAnswersProps) {
-  try {
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_API_BASE_URL}/questions/${question_id}/answers/`,
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          ...data,
-          team,
-          question_id,
-        }),
-      }
-    );
-
-    if (!res.ok) {
-      throw new Error("답변 생성에 실패했습니다.");
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_API_BASE_URL}/questions/${question_id}/answers/`,
+    {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        ...data,
+        team,
+        question_id,
+      }),
     }
+  );
 
-    const answers = await res.json();
-    return answers;
-  } catch (error) {
-    console.error(error);
+  if (!res.ok) {
+    throw new Error("답변 생성에 실패했습니다.");
   }
+
+  const answers = await res.json();
+  return answers;
 }

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.scss";
 import KakaoScript from "@/services/KakaoScript";
+import { ToastProvider } from "@/components/common/Toast";
 
 declare global {
   interface Window {
@@ -35,6 +36,7 @@ export default function RootLayout({
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
         {children}
         <KakaoScript />
+        <ToastProvider />
       </body>
     </html>
   );

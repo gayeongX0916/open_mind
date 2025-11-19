@@ -10,6 +10,7 @@ import getSubjectsQuestions from "@/services/subjects/getSubjectsQuestions";
 import QuestionList from "@/components/QuestionList";
 import DeleteModal from "@/components/Modal/DeleteModal";
 import FeedCardSkeleton from "@/components/Skeleton/FeedCardSkeleton";
+import { toast } from "react-toastify";
 
 export default function PostAnswerPage() {
   const { id } = useParams();
@@ -21,10 +22,20 @@ export default function PostAnswerPage() {
   useEffect(() => {
     const fetchQuestionList = async (id: number) => {
       setIsLoading(true);
-      const data = await getSubjectsQuestions(id);
-      setQuestionList(data.results);
-      setQuestionCount(data.count);
-      setIsLoading(false);
+
+      try {
+        const data = await getSubjectsQuestions(id);
+        setQuestionList(data.results);
+        setQuestionCount(data.count);
+      } catch (error) {
+        toast.error(
+          error instanceof Error
+            ? error.message
+            : "질문 목록을 불러오는 중 오류가 발생했습니다."
+        );
+      } finally {
+        setIsLoading(false);
+      }
     };
 
     fetchQuestionList(Number(id));

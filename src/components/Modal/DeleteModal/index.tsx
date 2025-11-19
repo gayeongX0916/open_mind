@@ -1,6 +1,7 @@
 import styles from "./index.module.scss";
 import deleteSubjects from "@/services/subjects/deleteSubjects";
 import { useRouter } from "next/navigation";
+import { toast } from "react-toastify";
 
 type DeleteModalProps = {
   subjectId: string;
@@ -24,8 +25,11 @@ export default function DeleteModal({
       const upated = stored.filter((id: number) => id !== Number(subjectId));
       localStorage.setItem("personalId", JSON.stringify(upated));
       router.push("/list");
+      toast.success("피드가 성공적으로 삭제되었습니다.");
     } catch (error) {
-      console.error(error);
+      toast.error(
+        error instanceof Error ? error.message : "피드 삭제에 실패했습니다."
+      );
     }
   };
 

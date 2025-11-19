@@ -5,11 +5,11 @@ import styles from "./index.module.scss";
 import logo from "@/assets/logo.svg";
 import { ShareButton } from "../common/Button";
 import backgroundImg from "@/assets/post_background.svg";
-import { Toast } from "../common/Toast";
 import { useEffect, useState } from "react";
 import { Subjects } from "@/types/Subjects";
 import getSubjectsDetails from "@/services/subjects/getSubjectsDetail";
 import { useRouter } from "next/navigation";
+import { toast } from "react-toastify";
 
 type HeaderProps = {
   subjectId: number;
@@ -17,7 +17,6 @@ type HeaderProps = {
 
 export default function Header({ subjectId }: HeaderProps) {
   const router = useRouter();
-  const [toastMessage, setToastMessage] = useState("");
   const [details, setDetails] = useState<Subjects>({
     id: 0,
     name: "",
@@ -28,8 +27,16 @@ export default function Header({ subjectId }: HeaderProps) {
 
   useEffect(() => {
     const fetchDetailSubjects = async (id: number) => {
-      const data = await getSubjectsDetails(id);
-      setDetails(data);
+      try {
+        const data = await getSubjectsDetails(id);
+        setDetails(data);
+      } catch (error) {
+        toast.error(
+          error instanceof Error
+            ? error.message
+            : "피드 상세 정보를 불러오는 중 오류가 발생했습니다."
+        );
+      }
     };
 
     fetchDetailSubjects(Number(subjectId));
@@ -39,10 +46,11 @@ export default function Header({ subjectId }: HeaderProps) {
     const currentURL = window.location.href;
     try {
       navigator.clipboard.writeText(currentURL);
-      setToastMessage("URL이 복사되었습니다.");
+      toast.success("URL이 복사되었습니다.");
     } catch (error) {
-      console.error(error);
-      setToastMessage("URL 복사에 실패했습니다.");
+      toast.error(
+        error instanceof Error ? error.message : "URL 복사에 실패했습니다."
+      );
     }
   };
 
@@ -68,7 +76,6 @@ export default function Header({ subjectId }: HeaderProps) {
 
   return (
     <header className={styles["header"]}>
-      {toastMessage && <Toast>{toastMessage}</Toast>}
       <Image
         src={backgroundImg}
         alt="상단 이미지"

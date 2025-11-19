@@ -4,23 +4,19 @@ type postReactionProps = {
 };
 
 export default async function postReaction({ id, type }: postReactionProps) {
-  try {
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_API_BASE_URL}/questions/${id}/reaction/`,
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ type }),
-      }
-    );
-
-    if (!res.ok) {
-      throw new Error("리액션 생성에 실패했습니다.");
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_API_BASE_URL}/questions/${id}/reaction/`,
+    {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ type }),
     }
+  );
 
-    const data=await res.json();
-    return data;
-  } catch (error) {
-    console.error(error);
+  if (!res.ok) {
+    throw new Error("리액션 생성에 실패했습니다.");
   }
+
+  const data = await res.json();
+  return data;
 }

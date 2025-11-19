@@ -11,6 +11,7 @@ import { Answers, SubjectsQuestions } from "@/types/Subjects";
 import deleteAnswers from "@/services/answers/deleteAnswers";
 import patchAnswers from "@/services/answers/patchAnswers";
 import MoreButton from "@/components/MoreButton";
+import { toast } from "react-toastify";
 
 type FeedCardProps = {
   item: SubjectsQuestions;
@@ -22,6 +23,10 @@ export function FeedCard({ item }: FeedCardProps) {
   const [answer, setAnswer] = useState<Answers | null>(item.answer);
   const actionDropdownRef = useRef<HTMLDivElement>(null);
   const [isOwner, setIsOwner] = useState(false);
+
+  useEffect(() => {
+    setAnswer(item.answer);
+  }, [item.answer]);
 
   const handleClickOpen = useCallback(() => {
     setIsOpen((prev) => !prev);
@@ -52,29 +57,39 @@ export function FeedCard({ item }: FeedCardProps) {
   }, []);
 
   const handleDeleteAnswer = useCallback(async () => {
-    if (!item.answer) return;
+    if (!answer) return;
     try {
-      await deleteAnswers(String(item.answer.id));
+      await deleteAnswers(String(answer.id));
       setAnswer(null);
       setIsOpen(false);
+      toast.success("답변이 삭제되었습니다.");
     } catch (error) {
-      console.error(error);
+      toast.error(
+        error instanceof Error
+          ? error.message
+          : "답변 삭제 중 오류가 발생했습니다."
+      );
     }
-  }, [item.answer]);
+  }, [answer]);
 
   const handleRejectAnswer = useCallback(async () => {
-    if (!item.answer) return;
+    if (!answer) return;
     try {
       const updatedAnswer = await patchAnswers({
         isRejected: true,
-        id: String(item.answer.id),
+        id: String(answer.id),
       });
       setAnswer(updatedAnswer);
       setIsOpen(false);
+      toast.success("답변이 거절 처리되었습니다.");
     } catch (error) {
-      console.error(error);
+      toast.error(
+        error instanceof Error
+          ? error.message
+          : "답변 거절 처리 중 오류가 발생했습니다."
+      );
     }
-  }, [item.answer]);
+  }, [answer]);
 
   return (
     <div className={styles["feed-card"]}>
@@ -107,6 +122,7 @@ export function FeedCard({ item }: FeedCardProps) {
         answers={answer}
         isEditing={isEditing}
         setIsEditing={setIsEditing}
+        onAnswerChange={setAnswer}
       />
 
       <div className={styles["feed-card__bottom-line"]}></div>
